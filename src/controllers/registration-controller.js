@@ -1,6 +1,6 @@
 const registrationService = require("../services/registration-service.js");
 
-class registrationController {
+class RegistrationController {
   async registration(req, res) {
     try {
       const { email, password, username } = req.body;
@@ -12,4 +12,4 @@ class registrationController {
   }
 }
 
-module.exports = new registrationController();
+module.exports = new RegistrationController();

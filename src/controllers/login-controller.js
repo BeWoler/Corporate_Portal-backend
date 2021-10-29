@@ -12,4 +12,4 @@ class LoginController {
   }
 }
 
-module.export = new LoginController();
+module.exports = new LoginController();

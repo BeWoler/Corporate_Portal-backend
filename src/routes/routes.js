@@ -1,5 +1,6 @@
 const Router = require("express").Router;
 const registrationController = require("../controllers/registration-controller");
+const loginController = require("../controllers/login-controller");
 const { body } = require("express-validator");
 
 process.setMaxListeners(0);
@@ -12,5 +13,7 @@ router.post(
   body("password").isLength({ min: 3, max: 16 }),
   registrationController.registration
 );
+
+router.post("/login", loginController.login);
 
 module.exports = router;
