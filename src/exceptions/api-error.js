@@ -8,7 +8,7 @@ module.exports = class ApiError extends Error {
     this.errors = errors;
   }
 
-  static BadRequest(message) {
+  static BadRequest(message, errors = []) {
     return new ApiError(400, message, errors);
   }
 };
