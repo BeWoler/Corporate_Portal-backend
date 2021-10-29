@@ -6,10 +6,10 @@ class RegistrationService {
     const candidateEmail = await userModel.findOne({ email });
     const candidateUserName = await userModel.findOne({ username });
     if (candidateEmail) {
-      throw Error("Email already exist");
+      throw new Error("Email already exist");
     }
     if (candidateUserName) {
-      throw Error("Username already exist");
+      throw new Error("Username already exist");
     }
     const hashPassword = await bcrypt.hash(password, 3);
 
