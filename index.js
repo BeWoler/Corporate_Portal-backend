@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const router = require("./src/routes/routes");
+const errorMiddleware = require("./src/middlewares/error-middleware");
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(
 );
 
 app.use("/api", router);
+app.use(errorMiddleware);
 
 const connection = async () => {
   await mongoose.connect(process.env.DB_URL, {
