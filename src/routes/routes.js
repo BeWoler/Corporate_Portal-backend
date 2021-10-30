@@ -16,4 +16,6 @@ router.post(
 
 router.post("/login", loginController.login);
 
+router.get("/refresh");
+
 module.exports = router;
