@@ -4,6 +4,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const router = require("./src/routes/routes");
 const errorMiddleware = require("./src/middlewares/error-middleware");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(
 );
 
 app.use("/api", router);
+app.use(cookieParser())
 app.use(errorMiddleware);
 
 const connection = async () => {

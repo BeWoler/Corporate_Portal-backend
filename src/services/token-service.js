@@ -25,3 +25,5 @@ class TokenService {
     return token;
   }
 }
+
+module.exports = new TokenService();

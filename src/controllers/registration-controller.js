@@ -6,7 +6,7 @@ class RegistrationController {
   async registration(req, res, next) {
     try {
       const errors = validationResult(req);
-      if(errors.isEmpty) {
+      if(!errors.isEmpty()) {
         return next(
           apiError.BadRequest("Validation error", errors.array())
         );
@@ -17,6 +17,9 @@ class RegistrationController {
         password,
         username
       );
+
+      res.cookie('refreshToken', userData.refreshToken, {maxAge: 2 * 24 * 60 * 60 * 1000, httpOnly: true});
+
       return res.json(userData);
     } catch (e) {
       next(e);
