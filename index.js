@@ -17,8 +17,8 @@ app.use(
   })
 );
 
-app.use("/api", router);
 app.use(cookieParser())
+app.use("/api", router);
 app.use(errorMiddleware);
 
 const connection = async () => {

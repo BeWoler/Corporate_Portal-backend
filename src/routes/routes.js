@@ -1,6 +1,8 @@
 const Router = require("express").Router;
 const registrationController = require("../controllers/registration-controller");
 const loginController = require("../controllers/login-controller");
+const refreshController = require("../controllers/refresh-controller");
+const logoutController = require("../controllers/logout-controller");
 const { body } = require("express-validator");
 
 process.setMaxListeners(0);
@@ -15,7 +17,7 @@ router.post(
 );
 
 router.post("/login", loginController.login);
-
-router.get("/refresh");
+router.post("/logout", logoutController.logout);
+router.get("/refresh", refreshController.refresh);
 
 module.exports = router;

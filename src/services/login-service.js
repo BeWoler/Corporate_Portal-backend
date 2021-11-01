@@ -25,6 +25,27 @@ class LoginService {
       ...tokens
     };
   }
+
+  async refresh(refreshToken) {
+    if (!refreshToken) {
+      throw new Error("UnauthorizedError");
+    }
+    const userData = tokenService.validateRefreshToken(refreshToken);
+    const tokenFromDb = await tokenService.findToken(refreshToken);
+    if(!userData || !tokenFromDb) {
+      throw new Error('UnauthorizedError');
+    }
+    const user = await userModel.findById(userData.id);
+    const userDto = new UserDto(user);
+    
+    const tokens = tokenService.generateTokens({...userDto});
+    await tokenService.saveToken(userDto.id, tokens.refreshToken);
+
+    return {
+      user: userDto,
+      ...tokens
+    };
+  }
 }
 
 module.exports = new LoginService();
