@@ -28,12 +28,12 @@ class LoginService {
 
   async refresh(refreshToken) {
     if (!refreshToken) {
-      throw new Error("UnauthorizedError");
+      throw apiError.UnauthorizedError();
     }
     const userData = tokenService.validateRefreshToken(refreshToken);
     const tokenFromDb = await tokenService.findToken(refreshToken);
     if(!userData || !tokenFromDb) {
-      throw new Error('UnauthorizedError');
+      throw apiError.UnauthorizedError();
     }
     const user = await userModel.findById(userData.id);
     const userDto = new UserDto(user);
