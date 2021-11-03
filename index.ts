@@ -1,10 +1,13 @@
-require("dotenv").config();
-const express = require("express");
-const cors = require("cors");
-const mongoose = require("mongoose");
-const router = require("./src/routes/routes");
+import * as dotenv from "dotenv";
+import express from "express";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+import mongoose from "mongoose";
+import { router } from "./src/routes/routes";
+
 const errorMiddleware = require("./src/middlewares/error-middleware");
-const cookieParser = require("cookie-parser");
+
+dotenv.config();
 
 const app = express();
 
@@ -17,15 +20,12 @@ app.use(
   })
 );
 
-app.use(cookieParser())
+app.use(cookieParser());
 app.use("/api", router);
 app.use(errorMiddleware);
 
 const connection = async () => {
-  await mongoose.connect(process.env.DB_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  await mongoose.connect(process.env.DB_URL);
   console.log("Connected");
   app.listen(process.env.PORT, () => {
     console.log(`Server is running on ${process.env.PORT} port`);
