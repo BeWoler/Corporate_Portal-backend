@@ -1,7 +1,9 @@
-module.exports = class UserDto {
-  email;
-  username;
-  id;
+import { ObjectId } from "mongoose";
+
+export class UserDto {
+  email: string;
+  username: string;
+  id: ObjectId;
 
   constructor(model) {
     this.email = model.email;
