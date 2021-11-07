@@ -8,7 +8,7 @@ export class RegistrationController {
       const errors = validationResult(req);
       if(!errors.isEmpty()) {
         return next(
-          ApiError.BadRequest("Validation error", [])
+          ApiError.BadRequest("Validation error", [{...errors}])
         );
       }
       const { email, password, username } = req.body;

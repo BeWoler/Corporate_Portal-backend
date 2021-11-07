@@ -5,7 +5,7 @@ import { ObjectId } from "mongoose";
 export class TokenService {
   public static generateTokens(payload: object) {
     const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET, {
-      expiresIn: "30m",
+      expiresIn: "5s",
     });
     const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET, {
       expiresIn: "2d",

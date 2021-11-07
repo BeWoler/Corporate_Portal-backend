@@ -12,7 +12,7 @@ module.exports = function (
       (): any;
       new (): any;
       json: {
-        (arg0: { message: string; errors?: string[] }): any;
+        (arg0: { message: string; errors?: object[] }): any;
         new (): any;
       };
     };

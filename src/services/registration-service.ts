@@ -9,10 +9,10 @@ export class RegistrationService {
     const candidateEmail = await UserModel.findOne({ email });
     const candidateUserName = await UserModel.findOne({ username });
     if (candidateEmail) {
-      throw ApiError.BadRequest("Email already exist", []);
+      throw ApiError.BadRequest("Email already exist", [{message: "Email already exist"}]);
     }
     if (candidateUserName) {
-      throw ApiError.BadRequest("Username already exist", []);
+      throw ApiError.BadRequest("Username already exist", [{message: "Username already exist"}]);
     }
     const hashPassword = await bcrypt.hash(password, 3);
 

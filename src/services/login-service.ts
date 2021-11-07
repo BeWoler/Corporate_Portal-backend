@@ -8,11 +8,11 @@ export class LoginService {
   public static async login(username: string, password: string) {
     const user = await UserModel.findOne({ username });
     if (!user) {
-      throw ApiError.BadRequest("User does not exist", []);
+      throw ApiError.BadRequest("User does not exist", [{message: "User does not exist"}]);
     }
     const isPassEqu = await bcrypt.compare(password, user.password);
     if (!isPassEqu) {
-      throw ApiError.BadRequest("Incorrect password", []);
+      throw ApiError.BadRequest("Incorrect password", [{message: "Incorrect password"}]);
     }
 
     const userDto = new UserDto(user);
