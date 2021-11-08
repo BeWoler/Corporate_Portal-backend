@@ -1,23 +1,11 @@
 import { ApiError } from "../exceptions/api-error";
+import * as express from "express";
 
 module.exports = function (
-  err: {
-    status: any;
-    message: any;
-    errors: any;
-  },
-  req: any,
-  res: {
-    status: (arg0: number) => {
-      (): any;
-      new (): any;
-      json: {
-        (arg0: { message: string; errors?: object[] }): any;
-        new (): any;
-      };
-    };
-  },
-  next: any
+  err: express.Errback,
+  req: express.Request,
+  res: express.Response,
+  next
 ) {
   console.log(err);
   if (err instanceof ApiError) {
@@ -26,4 +14,4 @@ module.exports = function (
       .json({ message: err.message, errors: err.errors });
   }
   return res.status(500).json({ message: "Unforeseeable error" });
-}
+};
