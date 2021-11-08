@@ -11,7 +11,8 @@ module.exports = function (
   if (err instanceof ApiError) {
     return res
       .status(err.status)
+      .send({message: err.message, errors: err.errors})
       .json({ message: err.message, errors: err.errors });
   }
-  return res.status(500).json({ message: "Unforeseeable error" });
+  return res.status(500).json({ message: "Unforeseeable error" }).send({message: "Unforeseeable error"});
 };
