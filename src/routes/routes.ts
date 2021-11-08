@@ -4,6 +4,7 @@ import { RegistrationController } from "../controllers/registration-controller";
 import { LoginController } from "../controllers/login-controller";
 import { RefreshController } from "../controllers/refresh-controller";
 import { LogoutController } from "../controllers/logout-controller";
+import authMiddleware from "../middlewares/auth-middleware";
 
 process.setMaxListeners(0);
 
@@ -19,3 +20,5 @@ router.post(
 router.post("/login", LoginController.login);
 router.post("/logout", LogoutController.logout);
 router.get("/refresh", RefreshController.refresh);
+
+router.get("/users", authMiddleware, LoginController.getUsers);

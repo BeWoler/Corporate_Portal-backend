@@ -1,7 +1,12 @@
+import * as express from 'express'
 import { ApiError } from "../exceptions/api-error"
 import { TokenService } from "../services/token-service";
 
-export = function (req: any, res: any, next: (arg0: any) => void) {
+interface User extends express.Request {
+  user: any;
+}
+
+export = function (req: User, res: express.Response, next) {
   try {
     const authorizationHeader = req.headers.authorization;
     if (!authorizationHeader) {
@@ -16,8 +21,9 @@ export = function (req: any, res: any, next: (arg0: any) => void) {
       return next(ApiError.UnauthorizedError());
     }
     req.user = userData;
+    next();
   }
   catch (e) {
-    return next(ApiError.UnauthorizedError());
+    return next();
   }
 }

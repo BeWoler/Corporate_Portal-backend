@@ -16,4 +16,14 @@ export class LoginController {
       next(e);
     }
   }
+
+  public static async getUsers(req, res, next) {
+    try {
+      const users = await LoginService.getAllUsers();
+      return res.json(users); 
+    }
+    catch(e) {
+      next(e)
+    }
+  }
 }
