@@ -11,6 +11,11 @@ export class LoginController {
         httpOnly: true,
       });
 
+      res.cookie("username", userData.user.username, {
+        maxAge: 2 * 24 * 60 * 60 * 1000,
+        httpOnly: true,
+      });
+
       return res.json(userData);
     } catch (e) {
       next(e);
@@ -20,10 +25,9 @@ export class LoginController {
   public static async getUsers(req, res, next) {
     try {
       const users = await LoginService.getAllUsers();
-      return res.json(users); 
-    }
-    catch(e) {
-      next(e)
+      return res.json(users);
+    } catch (e) {
+      next(e);
     }
   }
 }

@@ -1,5 +1,5 @@
-import * as express from 'express'
-import { ApiError } from "../exceptions/api-error"
+import * as express from "express";
+import { ApiError } from "../exceptions/api-error";
 import { TokenService } from "../services/token-service";
 
 interface User extends express.Request {
@@ -10,9 +10,9 @@ export = function (req: User, res: express.Response, next) {
   try {
     const authorizationHeader = req.headers.authorization;
     if (!authorizationHeader) {
-      return next(ApiError.UnauthorizedError())
+      return next(ApiError.UnauthorizedError());
     }
-    const accessToken = authorizationHeader.split(' ')[1];
+    const accessToken = authorizationHeader.split(" ")[1];
     if (!accessToken) {
       return next(ApiError.UnauthorizedError());
     }
@@ -22,8 +22,7 @@ export = function (req: User, res: express.Response, next) {
     }
     req.user = userData;
     next();
-  }
-  catch (e) {
+  } catch (e) {
     return next();
   }
-}
+};

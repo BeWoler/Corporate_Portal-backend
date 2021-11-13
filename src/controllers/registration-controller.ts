@@ -6,10 +6,8 @@ export class RegistrationController {
   public static async registration(req, res, next) {
     try {
       const errors = validationResult(req);
-      if(!errors.isEmpty()) {
-        return next(
-          ApiError.BadRequest("Validation error", [{...errors}])
-        );
+      if (!errors.isEmpty()) {
+        return next(ApiError.BadRequest("Validation error", [{ ...errors }]));
       }
       const { email, password, username } = req.body;
       const userData = await RegistrationService.registration(
@@ -18,7 +16,15 @@ export class RegistrationController {
         username
       );
 
-      res.cookie('refreshToken', userData.refreshToken, {maxAge: 2 * 24 * 60 * 60 * 1000, httpOnly: true});
+      res.cookie("refreshToken", userData.refreshToken, {
+        maxAge: 2 * 24 * 60 * 60 * 1000,
+        httpOnly: true,
+      });
+
+      res.cookie("username", userData.user.username, {
+        maxAge: 2 * 24 * 60 * 60 * 1000,
+        httpOnly: true,
+      });
 
       return res.json(userData);
     } catch (e) {
