@@ -5,18 +5,32 @@ import bcrypt from "bcrypt";
 import { ApiError } from "../exceptions/api-error";
 
 export class ChangePasswordService {
-  public static async edit(username: string, password: string) {
+  public static async edit(
+    username: string,
+    newPassword: string,
+    oldPassword: string
+  ) {
     const candidateToChange = await UserModel.findOne({ username });
+    const isOldPassEqu = await bcrypt.compare(
+      oldPassword,
+      candidateToChange.password
+    );
+    if (!isOldPassEqu) {
+      throw ApiError.BadRequest("Incorrect old password", [
+        { message: "Incorrect old password" },
+      ]);
+    }
     const isPassEqu = await bcrypt.compare(
-      password,
+      newPassword,
       candidateToChange.password
     );
     if (isPassEqu) {
-      throw ApiError.BadRequest("Incorrect password", [
-        { message: "The old password cannot be equal to the new password" },
-      ]);
+      throw ApiError.BadRequest(
+        "The old password cannot be equal to the new password",
+        [{ message: "The old password cannot be equal to the new password" }]
+      );
     }
-    const hashPassword = await bcrypt.hash(password, 3);
+    const hashPassword = await bcrypt.hash(newPassword, 3);
     const user = await UserModel.findOneAndUpdate(
       { username },
       { password: hashPassword }

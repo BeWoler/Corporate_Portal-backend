@@ -27,7 +27,7 @@ router.get("/refresh", RefreshController.refresh);
 
 router.patch(
   "/changePassword",
-  body("password").isLength({ min: 3, max: 16 }),
+  body("newPassword").isLength({ min: 3, max: 16 }),
   ChangePasswordController.edit
 );
 router.patch("/editInfo", EditUserController.editUser);

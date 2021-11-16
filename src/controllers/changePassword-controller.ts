@@ -10,8 +10,12 @@ export class ChangePasswordController {
         return next(ApiError.BadRequest("Validation error", [{ ...errors }]));
       }
       const { username } = req.cookies;
-      const { password } = req.body;
-      const userData = await ChangePasswordService.edit(username, password);
+      const { oldPassword, newPassword } = req.body;
+      const userData = await ChangePasswordService.edit(
+        username,
+        newPassword,
+        oldPassword
+      );
 
       res.cookie("refreshToken", userData.refreshToken, {
         maxAge: 2 * 24 * 60 * 60 * 1000,
