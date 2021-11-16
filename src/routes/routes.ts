@@ -25,7 +25,11 @@ router.post("/logout", LogoutController.logout);
 router.post("/delete", DeleteController.delete);
 router.get("/refresh", RefreshController.refresh);
 
-router.patch("/changePassword", ChangePasswordController.edit);
+router.patch(
+  "/changePassword",
+  body("password").isLength({ min: 3, max: 16 }),
+  ChangePasswordController.edit
+);
 router.patch("/editInfo", EditUserController.editUser);
 
 router.get("/users", authMiddleware, LoginController.getUsers);

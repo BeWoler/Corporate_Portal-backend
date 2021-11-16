@@ -1,8 +1,14 @@
 import { ChangePasswordService } from "../services/changePassword-service";
+import { validationResult } from "express-validator";
+import { ApiError } from "../exceptions/api-error";
 
 export class ChangePasswordController {
   public static async edit(req, res, next) {
     try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return next(ApiError.BadRequest("Validation error", [{ ...errors }]));
+      }
       const { username } = req.cookies;
       const { password } = req.body;
       const userData = await ChangePasswordService.edit(username, password);
