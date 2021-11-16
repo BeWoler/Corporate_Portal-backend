@@ -7,6 +7,7 @@ import { LogoutController } from "../controllers/logout-controller";
 import { DeleteController } from "../controllers/delete-controller";
 import { ChangePasswordController } from "../controllers/changePassword-controller";
 import authMiddleware from "../middlewares/auth-middleware";
+import { EditUserController } from "../controllers/editUser-controller";
 
 process.setMaxListeners(0);
 
@@ -25,5 +26,6 @@ router.post("/delete", DeleteController.delete);
 router.get("/refresh", RefreshController.refresh);
 
 router.patch("/changePassword", ChangePasswordController.edit);
+router.patch("/editInfo", EditUserController.editUser);
 
 router.get("/users", authMiddleware, LoginController.getUsers);
