@@ -4,6 +4,7 @@ interface User {
   email: string;
   password: string;
   username: string;
+  city: string;
   birthday: Date;
   firstName: string;
   lastName: string;
@@ -20,6 +21,7 @@ const schema = new Schema<User>({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   username: { type: String, required: true, unique: true },
+  city: { type: String },
   birthday: { type: Date, trim: true },
   firstName: { type: String },
   lastName: { type: String },
