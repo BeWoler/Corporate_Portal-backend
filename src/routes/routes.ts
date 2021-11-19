@@ -8,6 +8,7 @@ import { DeleteController } from "../controllers/delete-controller";
 import { ChangePasswordController } from "../controllers/changePassword-controller";
 import authMiddleware from "../middlewares/auth-middleware";
 import { EditUserController } from "../controllers/editUser-controller";
+import { ChangeAvatarController } from "../controllers/changeAvatar-controller";
 
 process.setMaxListeners(0);
 
@@ -30,6 +31,7 @@ router.patch(
   body("newPassword").isLength({ min: 3, max: 16 }),
   ChangePasswordController.edit
 );
+router.patch("/changeAvatar", ChangeAvatarController.changeAvatar);
 router.patch("/editInfo", EditUserController.editUser);
 
 router.get("/users", authMiddleware, LoginController.getUsers);
