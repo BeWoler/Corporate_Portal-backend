@@ -4,7 +4,6 @@ interface User {
   email: string;
   password: string;
   username: string;
-  userInfo: object;
   birthday: Date;
   firstName: string;
   lastName: string;
