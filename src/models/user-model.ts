@@ -6,7 +6,7 @@ interface User {
   username: string;
   avatar: string;
   city: string;
-  birthday: Date;
+  birthday: string;
   firstName: string;
   lastName: string;
   stack: string;
@@ -24,7 +24,7 @@ const schema = new Schema<User>({
   username: { type: String, required: true, unique: true },
   avatar: { type: String },
   city: { type: String },
-  birthday: { type: Date, trim: true },
+  birthday: { type: String, trim: true },
   firstName: { type: String },
   lastName: { type: String },
   description: { type: String },
