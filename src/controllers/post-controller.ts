@@ -13,4 +13,26 @@ export class PostController {
       next(e);
     }
   }
+
+  public static async getPost(req, res, next) {
+    try {
+      const { username } = req.cookies;
+
+      const userPosts = await PostService.getPost(username);
+
+      return res.json(userPosts);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  public static async getAllPosts(req, res, next) {
+    try {
+      const allPosts = await PostService.getAllPosts();
+
+      return res.json(allPosts);
+    } catch (e) {
+      next(e);
+    }
+  }
 }

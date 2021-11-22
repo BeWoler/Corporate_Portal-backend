@@ -21,4 +21,15 @@ export class PostService {
   public static async edit() {}
 
   public static async delete() {}
+
+  public static async getPost(username: string) {
+    const user = await UserModel.findOne({ username });
+    const posts = await PostModel.find({ user: user._id });
+    return posts;
+  }
+
+  public static async getAllPosts() {
+    const posts = await PostModel.find();
+    return posts;
+  }
 }

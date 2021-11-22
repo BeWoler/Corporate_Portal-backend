@@ -28,6 +28,8 @@ router.post("/delete", DeleteController.delete);
 router.post("/post", PostController.create);
 
 router.get("/refresh", RefreshController.refresh);
+router.get("/userPosts", PostController.getPost);
+router.get("/allPosts", PostController.getAllPosts);
 
 router.patch(
   "/changePassword",
