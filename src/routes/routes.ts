@@ -9,6 +9,7 @@ import { ChangePasswordController } from "../controllers/changePassword-controll
 import authMiddleware from "../middlewares/auth-middleware";
 import { EditUserController } from "../controllers/editUser-controller";
 import { ChangeAvatarController } from "../controllers/changeAvatar-controller";
+import { PostController } from "../controllers/post-controller";
 
 process.setMaxListeners(0);
 
@@ -24,6 +25,8 @@ router.post(
 router.post("/login", LoginController.login);
 router.post("/logout", LogoutController.logout);
 router.post("/delete", DeleteController.delete);
+router.post("/post", PostController.create);
+
 router.get("/refresh", RefreshController.refresh);
 
 router.patch(
