@@ -14,6 +14,30 @@ export class PostController {
     }
   }
 
+  public static async edit(req, res, next) {
+    try {
+      const { id, text } = req.body;
+
+      const postData = await PostService.edit(id, text);
+
+      return res.json(postData);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  public static async delete(req, res, next) {
+    try {
+      const { id } = req.body;
+
+      const postData = await PostService.delete(id);
+
+      return res.json(postData);
+    } catch (e) {
+      next(e);
+    }
+  }
+
   public static async getPost(req, res, next) {
     try {
       const { username } = req.cookies;

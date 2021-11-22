@@ -18,9 +18,20 @@ export class PostService {
     };
   }
 
-  public static async edit() {}
+  public static async edit(id: string, text: string) {
+    const post = await PostModel.findOneAndUpdate({ _id: id}, {text: text})
 
-  public static async delete() {}
+    const postDto = new PostDto(post);
+
+    return {
+      post: postDto,
+    };
+  }
+
+  public static async delete(id: string) {
+    const post = await PostModel.findOneAndDelete({ _id: id});
+    return post;
+  }
 
   public static async getPost(username: string) {
     const user = await UserModel.findOne({ username });
