@@ -16,9 +16,10 @@ export class PostController {
 
   public static async edit(req, res, next) {
     try {
-      const { id, text } = req.body;
+      const { id } = req.body;
+      const args = req.body;
 
-      const postData = await PostService.edit(id, text);
+      const postData = await PostService.edit(id, args);
 
       return res.json(postData);
     } catch (e) {

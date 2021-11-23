@@ -18,8 +18,8 @@ export class PostService {
     };
   }
 
-  public static async edit(id: string, text: string) {
-    const post = await PostModel.findOneAndUpdate({ _id: id}, {text: text})
+  public static async edit(id: string, {...args}: Object) {
+    const post = await PostModel.findOneAndUpdate({ _id: id}, {...args})
 
     const postDto = new PostDto(post);
 
