@@ -26,6 +26,7 @@ router.post("/login", LoginController.login);
 router.post("/logout", LogoutController.logout);
 router.post("/delete", DeleteController.delete);
 router.post("/post", PostController.create);
+router.post("/post/comment", PostController.comment);
 router.post("/deletePost", PostController.delete);
 
 router.get("/refresh", RefreshController.refresh);

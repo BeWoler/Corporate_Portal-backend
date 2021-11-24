@@ -18,7 +18,7 @@ interface User {
   description: string;
 }
 
-const schema = new Schema<User>({
+const userSchema = new Schema<User>({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   username: { type: String, required: true, unique: true },
@@ -36,4 +36,4 @@ const schema = new Schema<User>({
   phone: { type: Number },
 });
 
-export const UserModel = model<User>("User", schema);
+export const UserModel = model<User>("User", userSchema);

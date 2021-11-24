@@ -5,7 +5,7 @@ export class PostDto {
   author: string;
   text: string;
   likes: number;
-  comments: object;
+  comments: object[];
 
   constructor(model) {
     this.id = model._id;

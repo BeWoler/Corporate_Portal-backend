@@ -1,4 +1,5 @@
 import { PostModel } from "../models/post-model";
+import { CommentModel } from "../models/comment-model";
 import { UserModel } from "../models/user-model";
 import { PostDto } from "../dtos/post-dto";
 
@@ -18,8 +19,26 @@ export class PostService {
     };
   }
 
-  public static async edit(id: string, {...args}: Object) {
-    const post = await PostModel.findOneAndUpdate({ _id: id}, {...args})
+  public static async edit(id: string, { ...args }: Object) {
+    const post = await PostModel.findOneAndUpdate({ _id: id }, { ...args });
+
+    const postDto = new PostDto(post);
+
+    return {
+      post: postDto,
+    };
+  }
+
+  public static async comment(id: string, username: string, text: string) {
+    const post = await PostModel.findOne({ _id: id });
+    const comment = await CommentModel.create({
+      post: id,
+      author: username,
+      text: text,
+    });
+
+    post.comments.push(comment);
+    post.save();
 
     const postDto = new PostDto(post);
 
@@ -29,7 +48,7 @@ export class PostService {
   }
 
   public static async delete(id: string) {
-    const post = await PostModel.findOneAndDelete({ _id: id});
+    const post = await PostModel.findOneAndDelete({ _id: id });
     return post;
   }
 

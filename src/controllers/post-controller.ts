@@ -27,6 +27,19 @@ export class PostController {
     }
   }
 
+  public static async comment(req, res, next) {
+    try {
+      const { id, text } = req.body;
+      const { username } = req.cookies;
+
+      const postData = await PostService.comment(id, username, text);
+
+      return res.json(postData);
+    } catch (e) {
+      next(e);
+    }
+  }
+
   public static async delete(req, res, next) {
     try {
       const { id } = req.body;

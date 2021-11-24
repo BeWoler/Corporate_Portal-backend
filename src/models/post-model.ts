@@ -6,22 +6,15 @@ interface Post {
   author: string;
   text: string;
   likes: number;
-  comments: [];
+  comments: object[];
 }
 
-const schema = new Schema<Post>({
+const postSchema = new Schema<Post>({
   user: { type: Schema.Types.ObjectId, ref: "User" },
   author: { type: String, required: true },
   text: { type: String, required: true },
   likes: { type: Number, default: 0 },
-  comments: [
-    {
-      user: { type: Schema.Types.ObjectId, ref: "User" },
-      author: { type: String, required: true },
-      text: { type: String },
-      likes: { type: Number, default: 0 },
-    },
-  ],
+  comments: [{ type: Object }],
 });
 
-export const PostModel = model<Post>("Post", schema);
+export const PostModel = model<Post>("Post", postSchema);
