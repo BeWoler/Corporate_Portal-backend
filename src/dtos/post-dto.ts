@@ -5,6 +5,7 @@ export class PostDto {
   author: string;
   text: string;
   likes: number;
+  time: object;
   comments: object[];
 
   constructor(model) {
@@ -12,6 +13,7 @@ export class PostDto {
     this.author = model.author;
     this.text = model.text;
     this.likes = model.likes;
+    this.time = model.time;
     this.comments = model.comments;
   }
 }

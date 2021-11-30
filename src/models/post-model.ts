@@ -6,6 +6,7 @@ interface Post {
   author: string;
   text: string;
   likes: number;
+  time: object;
   comments: object[];
 }
 
@@ -14,6 +15,7 @@ const postSchema = new Schema<Post>({
   author: { type: String, required: true },
   text: { type: String, required: true },
   likes: { type: Number, default: 0 },
+  time : { type: Object },
   comments: [{ type: Object }],
 });
 
