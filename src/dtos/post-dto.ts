@@ -4,7 +4,7 @@ export class PostDto {
   id: ObjectId;
   author: string;
   text: string;
-  likes: number;
+  likes: object[];
   time: object;
   comments: object[];
 

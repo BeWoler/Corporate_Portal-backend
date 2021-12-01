@@ -27,13 +27,13 @@ router.post("/logout", LogoutController.logout);
 router.post("/delete", DeleteController.delete);
 router.post("/post", PostController.create);
 router.post("/post/comment", PostController.comment);
-router.post("/deletePost", PostController.delete);
+router.post("/post/delete", PostController.delete);
 
 router.get("/refresh", RefreshController.refresh);
 router.get("/userPosts", PostController.getPost);
 router.get("/allPosts", PostController.getAllPosts);
 
-router.patch("/editPost", PostController.edit);
+router.patch("/post/edit", PostController.edit);
 router.patch(
   "/changePassword",
   body("newPassword").isLength({ min: 3, max: 16 }),
