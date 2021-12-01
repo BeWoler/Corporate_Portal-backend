@@ -24,10 +24,23 @@ app.use(cookieParser());
 app.use("/api", router);
 app.use(errorMiddleware);
 
+const server = require("http").Server(app)
+const io = require("socket.io")(server, {
+  cors: {
+    origin: process.env.CORS_ORIGIN,
+    credentials: true,
+    methods: ["GET", "POST"],
+  }
+});
+
+io.on("connection", socket => {
+  console.log("socket connected", socket.id);
+})
+
 const connection = async () => {
   await mongoose.connect(process.env.DB_URL);
   console.log("Connected");
-  app.listen(process.env.PORT, () => {
+  server.listen(process.env.PORT, () => {
     console.log(`Server is running on ${process.env.PORT} port`);
   });
 };
