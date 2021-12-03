@@ -4,6 +4,7 @@ export class PostDto {
   id: ObjectId;
   author: string;
   text: string;
+  likes: ObjectId[];
   time: object;
   comments: object[];
 
@@ -11,6 +12,7 @@ export class PostDto {
     this.id = model._id;
     this.author = model.author;
     this.text = model.text;
+    this.likes = model.likes;
     this.time = model.time;
     this.comments = model.comments;
   }
