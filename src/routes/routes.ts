@@ -8,9 +8,10 @@ import { DeleteController } from "../controllers/delete-controller";
 import { ChangePasswordController } from "../controllers/changePassword-controller";
 import authMiddleware from "../middlewares/auth-middleware";
 import { EditUserController } from "../controllers/editUser-controller";
-import { ChangeAvatarController } from "../controllers/changeAvatar-controller";
 import { PostController } from "../controllers/post-controller";
 import { LikeController } from "../controllers/like-controller";
+import { AvatarController } from "../controllers/avatar-controller";
+const multerMiddleware = require("../middlewares/multer-middleware");
 
 process.setMaxListeners(0);
 
@@ -29,6 +30,7 @@ router.post("/post", PostController.create);
 router.post("/post/comment", PostController.comment);
 router.post("/post/delete", PostController.delete);
 router.post("/like", LikeController.like);
+router.post("/avatar", multerMiddleware.single("image"), AvatarController.save);
 
 router.get("/refresh", RefreshController.refresh);
 router.get("/userPosts", PostController.getPost);
@@ -41,5 +43,4 @@ router.patch(
   body("newPassword").isLength({ min: 3, max: 16 }),
   ChangePasswordController.edit
 );
-router.patch("/changeAvatar", ChangeAvatarController.changeAvatar);
 router.patch("/editInfo", EditUserController.editUser);

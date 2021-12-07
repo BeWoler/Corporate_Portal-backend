@@ -22,20 +22,21 @@ app.use(
 
 app.use(cookieParser());
 app.use("/api", router);
+app.use("/images", express.static("./images"));
 app.use(errorMiddleware);
 
-const server = require("http").Server(app)
+const server = require("http").Server(app);
 const io = require("socket.io")(server, {
   cors: {
     origin: process.env.CORS_ORIGIN,
     credentials: true,
     methods: ["GET", "POST"],
-  }
+  },
 });
 
-io.on("connection", socket => {
+io.on("connection", (socket) => {
   console.log("socket connected", socket.id);
-})
+});
 
 const connection = async () => {
   await mongoose.connect(process.env.DB_URL);

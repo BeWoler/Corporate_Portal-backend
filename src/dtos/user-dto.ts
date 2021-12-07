@@ -3,6 +3,7 @@ import { ObjectId } from "mongoose";
 export class UserDto {
   email: string;
   username: string;
+  avatar: string;
   city: string;
   birthday: Date;
   firstName: string;
@@ -19,6 +20,7 @@ export class UserDto {
   constructor(model) {
     this.email = model.email;
     this.username = model.username;
+    this.avatar = model.avatar;
     this.id = model._id;
     this.city = model.city;
     this.birthday = model.birthday;
