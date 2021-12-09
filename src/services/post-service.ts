@@ -4,7 +4,7 @@ import { UserModel } from "../models/user-model";
 import { PostDto } from "../dtos/post-dto";
 
 export class PostService {
-  public static async create(username: string, text: string) {
+  public static async create(username: string, text: string, file: string) {
     const data = new Date();
     const objDate = {
       year: data.getFullYear(),
@@ -18,6 +18,7 @@ export class PostService {
       user: user._id,
       author: user.username,
       time: objDate,
+      file: file,
       text,
     });
 

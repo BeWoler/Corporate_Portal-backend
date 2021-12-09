@@ -31,6 +31,9 @@ router.post("/post/comment", PostController.comment);
 router.post("/post/delete", PostController.delete);
 router.post("/like", LikeController.like);
 router.post("/avatar", multerMiddleware.single("image"), AvatarController.save);
+router.post("/post/upload", multerMiddleware.single("files"), (req, res) => {
+  res.json({ path: req.file.path });
+});
 
 router.get("/refresh", RefreshController.refresh);
 router.get("/userPosts", PostController.getPost);

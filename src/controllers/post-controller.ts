@@ -4,9 +4,9 @@ export class PostController {
   public static async create(req, res, next) {
     try {
       const { username } = req.cookies;
-      const { text } = req.body;
-
-      const postData = await PostService.create(username, text);
+      const { text, fileName } = req.body;
+      const filePath = `http://localhost:3010/${fileName}`;
+      const postData = await PostService.create(username, text, filePath);
 
       return res.json(postData);
     } catch (e) {
