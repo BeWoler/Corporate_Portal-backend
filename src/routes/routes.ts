@@ -25,25 +25,26 @@ router.post(
 );
 router.post("/login", LoginController.login);
 router.post("/logout", LogoutController.logout);
-router.post("/delete", DeleteController.delete);
-router.post("/post", PostController.create);
-router.post("/post/comment", PostController.comment);
-router.post("/post/delete", PostController.delete);
-router.post("/like", LikeController.like);
+router.post("/delete", authMiddleware, DeleteController.delete);
+router.post("/post", authMiddleware, PostController.create);
+router.post("/post/comment", authMiddleware, PostController.comment);
+router.post("/post/delete", authMiddleware, PostController.delete);
+router.post("/like", authMiddleware, LikeController.like);
 router.post("/avatar", multerMiddleware.single("image"), AvatarController.save);
 router.post("/post/upload", multerMiddleware.single("files"), (req, res) => {
   res.json({ path: req.file.path });
 });
 
 router.get("/refresh", RefreshController.refresh);
-router.get("/userPosts", PostController.getPost);
-router.get("/allPosts", PostController.getAllPosts);
+router.get("/userPosts", authMiddleware, PostController.getPost);
+router.get("/allPosts", authMiddleware, PostController.getAllPosts);
 router.get("/users", authMiddleware, LoginController.getUsers);
 
-router.patch("/post/edit", PostController.edit);
+router.patch("/post/edit", authMiddleware, PostController.edit);
 router.patch(
   "/changePassword",
+  authMiddleware,
   body("newPassword").isLength({ min: 3, max: 16 }),
   ChangePasswordController.edit
 );
-router.patch("/editInfo", EditUserController.editUser);
+router.patch("/editInfo", authMiddleware, EditUserController.editUser);
