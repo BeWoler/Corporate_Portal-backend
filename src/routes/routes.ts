@@ -11,6 +11,7 @@ import { EditUserController } from "../controllers/editUser-controller";
 import { PostController } from "../controllers/post-controller";
 import { LikeController } from "../controllers/like-controller";
 import { AvatarController } from "../controllers/avatar-controller";
+import { ConversetionController } from "../controllers/conversation-controller";
 const multerMiddleware = require("../middlewares/multer-middleware");
 
 process.setMaxListeners(0);
@@ -34,7 +35,9 @@ router.post("/avatar", multerMiddleware.single("image"), AvatarController.save);
 router.post("/post/upload", multerMiddleware.single("files"), (req, res) => {
   res.json({ path: req.file.path });
 });
+router.post("/conversation", ConversetionController.conversation);
 
+router.get("/:userId", ConversetionController.getConversations);
 router.get("/refresh", RefreshController.refresh);
 router.get("/userPosts", authMiddleware, PostController.getPost);
 router.get("/allPosts", authMiddleware, PostController.getAllPosts);
