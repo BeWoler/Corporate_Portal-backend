@@ -7,8 +7,7 @@ export class ConversetionController {
         req.body.senderId,
         req.body.receiverId
       );
-      const savedConversation = await conversation.save();
-      return res.status(200).json(savedConversation);
+      return res.status(200).json(conversation);
     } catch (e) {
       next(e);
     }
