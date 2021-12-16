@@ -13,6 +13,7 @@ import { LikeController } from "../controllers/like-controller";
 import { AvatarController } from "../controllers/avatar-controller";
 import { ConversetionController } from "../controllers/conversation-controller";
 import { MessageController } from "../controllers/message-controller";
+import { UserController } from "../controllers/user-controller";
 const multerMiddleware = require("../middlewares/multer-middleware");
 
 process.setMaxListeners(0);
@@ -41,6 +42,7 @@ router.post("/messenger/message", MessageController.message);
 
 router.get("/messenger/:conversationId", MessageController.getMessages);
 router.get("/messenger/:userId", ConversetionController.getConversations);
+router.get("/profile/:userId", UserController.getUserInfo);
 router.get("/refresh", RefreshController.refresh);
 router.get("/userPosts", authMiddleware, PostController.getPost);
 router.get("/allPosts", authMiddleware, PostController.getAllPosts);
