@@ -1,7 +1,7 @@
 import { ObjectId } from "mongoose";
 
 export class PostDto {
-  id: ObjectId;
+  user: ObjectId;
   author: string;
   text: string;
   likes: ObjectId[];
@@ -10,7 +10,7 @@ export class PostDto {
   comments: object[];
 
   constructor(model) {
-    this.id = model._id;
+    this.user = model.user;
     this.author = model.author;
     this.text = model.text;
     this.likes = model.likes;

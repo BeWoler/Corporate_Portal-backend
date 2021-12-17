@@ -71,9 +71,13 @@ export class PostService {
     return post;
   }
 
-  public static async getPost(username: string) {
-    const user = await UserModel.findOne({ username });
-    const posts = await PostModel.find({ user: user._id });
+  public static async getAllUserPostsByUsername(username: string) {
+    const posts = await PostModel.find({ author: username });
+    return posts;
+  }
+
+  public static async getAllUserPostsByUserId(userId: string) {
+    const posts = await PostModel.find({ user: userId });
     return posts;
   }
 

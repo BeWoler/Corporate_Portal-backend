@@ -52,11 +52,23 @@ export class PostController {
     }
   }
 
-  public static async getPost(req, res, next) {
+  public static async getAllUserPostsByUsername(req, res, next) {
     try {
-      const { username } = req.cookies;
+      const username = req.params.username;
 
-      const userPosts = await PostService.getPost(username);
+      const userPosts = await PostService.getAllUserPostsByUsername(username);
+
+      return res.json(userPosts);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  public static async getAllUserPostsByUserId(req, res, next) {
+    try {
+      const userId = req.params.userId;
+
+      const userPosts = await PostService.getAllUserPostsByUserId(userId);
 
       return res.json(userPosts);
     } catch (e) {

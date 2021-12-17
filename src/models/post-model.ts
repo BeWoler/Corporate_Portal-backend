@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose";
 import mongoose from "mongoose";
 
 interface Post {
-  user: mongoose.ObjectId;
+  user: string;
   author: string;
   text: string;
   likes: mongoose.ObjectId[];
@@ -12,7 +12,7 @@ interface Post {
 }
 
 const postSchema = new Schema<Post>({
-  user: { type: Schema.Types.ObjectId, ref: "User" },
+  user: { type: String, ref: "User" },
   author: { type: String, required: true },
   text: { type: String },
   likes: [{ type: Schema.Types.ObjectId, ref: "User" }],
