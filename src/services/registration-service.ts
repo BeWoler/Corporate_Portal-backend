@@ -20,8 +20,8 @@ export class RegistrationService {
       email,
       password: hashPassword,
       username,
-      firstName,
-      lastName,
+      firstName: firstName,
+      lastName: lastName,
     });
 
     const userDto = new UserDto(user);
