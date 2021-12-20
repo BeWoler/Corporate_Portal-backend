@@ -5,7 +5,7 @@ import { TokenService } from "../services/token-service";
 import { UserDto } from "../dtos/user-dto";
 
 export class RegistrationService {
-  public static async registration(email: string, password: string, username: string) {
+  public static async registration(email: string, password: string, username: string, firstName: string, lastName: string) {
     const candidateEmail = await UserModel.findOne({ email });
     const candidateUserName = await UserModel.findOne({ username });
     if (candidateEmail) {
@@ -20,6 +20,8 @@ export class RegistrationService {
       email,
       password: hashPassword,
       username,
+      firstName,
+      lastName,
     });
 
     const userDto = new UserDto(user);

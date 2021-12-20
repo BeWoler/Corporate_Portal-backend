@@ -9,11 +9,13 @@ export class RegistrationController {
       if (!errors.isEmpty()) {
         return next(ApiError.BadRequest("Validation error", [{ ...errors }]));
       }
-      const { email, password, username } = req.body;
+      const { email, password, username, firstName, lastName } = req.body;
       const userData = await RegistrationService.registration(
         email,
         password,
-        username
+        username,
+        firstName,
+        lastName
       );
 
       res.cookie("refreshToken", userData.refreshToken, {
