@@ -46,8 +46,8 @@ export class LoginService {
     };
   }
 
-  public static async getAllUsers() {
-    const users = await UserModel.find();
+  public static async getAllUsers(args: object) {
+    const users = await UserModel.find(args);
     return users;
   }
 }

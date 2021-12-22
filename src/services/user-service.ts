@@ -11,4 +11,9 @@ export class UserService {
       user: userDto,
     };
   }
+
+  public static async getAllUsers(args: object) {
+    const users = await UserModel.find(args);
+    return users;
+  }
 }

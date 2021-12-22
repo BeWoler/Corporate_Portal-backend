@@ -10,4 +10,14 @@ export class UserController {
       next(e);
     }
   }
+
+  public static async getUsers(req, res, next) {
+    try {
+      const args = req.query;
+      const users = await UserService.getAllUsers(args);
+      return res.json(users);
+    } catch (e) {
+      next(e);
+    }
+  }
 }
