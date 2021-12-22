@@ -45,9 +45,4 @@ export class LoginService {
       ...tokens,
     };
   }
-
-  public static async getAllUsers(args: object) {
-    const users = await UserModel.find(args);
-    return users;
-  }
 }

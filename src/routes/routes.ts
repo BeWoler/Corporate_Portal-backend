@@ -61,4 +61,4 @@ router.patch(
   ChangePasswordController.edit
 );
 router.patch("/editInfo", EditUserController.editUser);
-router.get("/users", UserController.getUsers);
+router.get("/users/", UserController.getUsers);
