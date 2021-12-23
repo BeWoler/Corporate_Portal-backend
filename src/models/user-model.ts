@@ -16,6 +16,7 @@ interface User {
   skype: string;
   phone: number;
   description: string;
+  privatePage: boolean;
 }
 
 const userSchema = new Schema<User>({
@@ -34,6 +35,7 @@ const userSchema = new Schema<User>({
   education: { type: String, default: "" },
   skype: { type: String, default: "" },
   phone: { type: Number },
+  privatePage: { type: Boolean, default: false }
 });
 
 export const UserModel = model<User>("User", userSchema);

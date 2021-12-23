@@ -15,6 +15,7 @@ export class UserDto {
   skype: string;
   phone: number;
   description: string;
+  privatePage: boolean;
   id: ObjectId;
 
   constructor(model) {
@@ -32,6 +33,7 @@ export class UserDto {
     this.education = model.education;
     this.skype = model.skype;
     this.phone = model.phone;
+    this.privatePage = model.privatePage;
     this.description = model.description;
   }
 }
