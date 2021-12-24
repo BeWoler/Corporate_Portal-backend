@@ -48,10 +48,13 @@ export class PostService {
       hours: data.getHours(),
       minutes: data.getMinutes(),
     };
+    const user = await UserModel.findOne({ username });
     const post = await PostModel.findOne({ _id: id });
     const comment = await CommentModel.create({
       post: id,
+      user: user.id,
       author: username,
+      avatar: user.avatar,
       time: objDate,
       text: text,
     });
