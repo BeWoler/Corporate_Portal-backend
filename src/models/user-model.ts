@@ -36,7 +36,7 @@ const userSchema = new Schema<User>({
   education: { type: String, default: "" },
   skype: { type: String, default: "" },
   phone: { type: Number },
-  friends: { type: Array, unique: true },
+  friends: { type: Array, unique: true, ref: "User" },
   privatePage: { type: Boolean, default: false },
 });
 

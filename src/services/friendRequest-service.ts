@@ -46,7 +46,7 @@ export class FriendRequestService {
     return request;
   }
 
-  public static async findRequests(receiverId: string) {
+  public static async getRequests(receiverId: string) {
     const requests = await FriendRequestModel.find({ receiver: receiverId }).populate('sender');
     return requests;
   }

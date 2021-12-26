@@ -38,10 +38,9 @@ export class FriendRequestController {
     }
   }
 
-  public static async findRequests(req, res, next) {
+  public static async getRequests(req, res, next) {
     try {
-      const { receiverId } = req.body;
-      const requests = await FriendRequestService.findRequests(receiverId);
+      const requests = await FriendRequestService.getRequests(req.params.receiverId);
   
       return res.json(requests);
     } catch (e) {

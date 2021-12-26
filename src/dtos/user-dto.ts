@@ -14,6 +14,7 @@ export class UserDto {
   education: string;
   skype: string;
   phone: number;
+  friends: any;
   description: string;
   privatePage: boolean;
   id: ObjectId;
@@ -33,6 +34,7 @@ export class UserDto {
     this.education = model.education;
     this.skype = model.skype;
     this.phone = model.phone;
+    this.friends = model.friends;
     this.privatePage = model.privatePage;
     this.description = model.description;
   }
