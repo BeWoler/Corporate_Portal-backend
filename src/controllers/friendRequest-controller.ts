@@ -37,4 +37,15 @@ export class FriendRequestController {
       next(e);
     }
   }
+
+  public static async findRequests(req, res, next) {
+    try {
+      const { receiverId } = req.body;
+      const requests = await FriendRequestService.findRequests(receiverId);
+  
+      return res.json(requests);
+    } catch (e) {
+      next(e);
+    }
+  }
 }
