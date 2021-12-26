@@ -47,4 +47,14 @@ export class FriendRequestController {
       next(e);
     }
   }
+
+  public static async getUserFriends(req, res, next) {
+    try {
+      const user = await FriendRequestService.getUserFriends(req.params.receiverId);
+  
+      return res.json(user);
+    } catch (e) {
+      next(e);
+    }
+  }
 }

@@ -35,7 +35,6 @@ export class FriendRequestService {
 
     const receiverDto = new UserDto(receiver);
     const senderDto = new UserDto(sender);
-
     return { receiver: receiverDto, sender: senderDto, request };
   }
 
@@ -47,7 +46,17 @@ export class FriendRequestService {
   }
 
   public static async getRequests(receiverId: string) {
-    const requests = await FriendRequestModel.find({ receiver: receiverId }).populate('sender');
+    const requests = await FriendRequestModel.find({
+      receiver: receiverId,
+    }).populate("sender");
     return requests;
+  }
+
+  public static async getUserFriends(userId: string) {
+    const user = await UserModel.findOne({ _id: userId }).populate("friends");
+
+    const userDto = new UserDto(user);
+
+    return userDto.friends;
   }
 }

@@ -42,6 +42,7 @@ router.get("/messenger/:userId", ConversetionController.getConversations);
 router.post("/friend/request", FriendRequestController.request);
 router.post("/friend/accept", FriendRequestController.accept);
 router.post("/friend/decline", FriendRequestController.decline);
+router.get("/friends/:receiverId", FriendRequestController.getUserFriends);
 router.get("/friend/requests/:receiverId", FriendRequestController.getRequests);
 
 router.get("/profile/:userId", UserController.getUserInfo);
