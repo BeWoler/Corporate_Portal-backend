@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, SchemaDefinitionProperty } from "mongoose";
 
 interface User {
   email: string;
@@ -16,6 +16,7 @@ interface User {
   skype: string;
   phone: number;
   description: string;
+  friends: any;
   privatePage: boolean;
 }
 
@@ -35,7 +36,8 @@ const userSchema = new Schema<User>({
   education: { type: String, default: "" },
   skype: { type: String, default: "" },
   phone: { type: Number },
-  privatePage: { type: Boolean, default: false }
+  friends: { type: Array, unique: true },
+  privatePage: { type: Boolean, default: false },
 });
 
 export const UserModel = model<User>("User", userSchema);

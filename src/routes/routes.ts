@@ -14,6 +14,7 @@ import { AvatarController } from "../controllers/avatar-controller";
 import { ConversetionController } from "../controllers/conversation-controller";
 import { MessageController } from "../controllers/message-controller";
 import { UserController } from "../controllers/user-controller";
+import { FriendRequestController } from "../controllers/friendRequest-controller";
 const multerMiddleware = require("../middlewares/multer-middleware");
 
 process.setMaxListeners(0);
@@ -37,6 +38,10 @@ router.post("/messenger/conversation", ConversetionController.conversation);
 router.post("/messenger/message", MessageController.message);
 router.get("/messenger/:conversationId", MessageController.getMessages);
 router.get("/messenger/:userId", ConversetionController.getConversations);
+
+router.post("/friend/request", FriendRequestController.request);
+router.post("/friend/accept", FriendRequestController.accept);
+router.post("/friend/decline", FriendRequestController.decline);
 
 router.get("/profile/:userId", UserController.getUserInfo);
 router.get("/refresh", RefreshController.refresh);
