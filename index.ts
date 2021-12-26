@@ -22,7 +22,7 @@ app.use(
 
 app.use(cookieParser());
 app.use("/api", router);
-app.use("/images", express.static("./images"));
+app.use("/files", express.static("./files"));
 app.use(errorMiddleware);
 
 const server = require("http").Server(app);

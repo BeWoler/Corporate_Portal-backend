@@ -7,7 +7,7 @@ export class AvatarController {
         const { username } = req.cookies;
         const imgPath = await AvatarService.save(
           username,
-          req.file.path
+          "http://localhost:3010/" + req.file.path
         );
         return res.json(imgPath);
       }
