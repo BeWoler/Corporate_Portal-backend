@@ -9,7 +9,7 @@ export class FriendRequestService {
       receiver: receiverId,
     });
     if (candidateFriend) {
-      return;
+      return null;
     }
     const request = await FriendRequestModel.create({
       sender: senderId,
@@ -50,13 +50,5 @@ export class FriendRequestService {
       receiver: receiverId,
     }).populate("sender");
     return requests;
-  }
-
-  public static async getUserFriends(userId: string) {
-    const user = await UserModel.findOne({ _id: userId }).populate("friends");
-
-    const userDto = new UserDto(user);
-
-    return userDto.friends;
   }
 }
