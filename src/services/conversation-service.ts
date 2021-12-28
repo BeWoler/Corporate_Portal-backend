@@ -11,7 +11,7 @@ export class ConversationService {
   public static async getConversations(userId: string) {
     const conversation = await ConversationModel.find({
       members: { $in: [userId] },
-    });
+    }).populate('members');
     return conversation;
   }
 }

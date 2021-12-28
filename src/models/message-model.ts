@@ -8,7 +8,7 @@ interface Message {
 
 const messageSchema = new Schema<Message>({
   conversationId: { type: String },
-  sender: { type: String },
+  sender: { type: String, ref: "User" },
   text: { type: String },
 });
 

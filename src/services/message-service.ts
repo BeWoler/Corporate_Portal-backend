@@ -15,7 +15,7 @@ export class MessageService {
   }
 
   public static async getMessages(conversationId: string) {
-    const messages = await MessageModel.find({ conversationId });
+    const messages = await MessageModel.find({ conversationId }).populate('sender');
     return messages;
   }
 }

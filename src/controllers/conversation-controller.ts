@@ -7,7 +7,7 @@ export class ConversetionController {
         req.body.senderId,
         req.body.receiverId
       );
-      return res.status(200).json(conversation);
+      return res.json(conversation);
     } catch (e) {
       next(e);
     }
@@ -15,10 +15,8 @@ export class ConversetionController {
 
   public static async getConversations(req, res, next) {
     try {
-      const conversations = await ConversationService.getConversations(
-        req.params.userId
-      );
-      return res.status(200).json(conversations);
+      const conversations = await ConversationService.getConversations(req.params.userId);
+      return res.json(conversations);
     } catch (e) {
       next(e);
     }

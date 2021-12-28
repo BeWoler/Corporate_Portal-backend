@@ -36,7 +36,7 @@ router.post("/avatar", multerMiddleware.single("image"), AvatarController.save);
 
 router.post("/messenger/conversation", ConversetionController.conversation);
 router.post("/messenger/message", MessageController.message);
-router.get("/messenger/:conversationId", MessageController.getMessages);
+router.get("/messenger/message/:conversationId", MessageController.getMessages);
 router.get("/messenger/:userId", ConversetionController.getConversations);
 
 router.post("/friend/request", FriendRequestController.request);
