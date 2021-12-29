@@ -40,8 +40,10 @@ export class FriendRequestController {
 
   public static async getRequests(req, res, next) {
     try {
-      const requests = await FriendRequestService.getRequests(req.params.receiverId);
-  
+      const requests = await FriendRequestService.getRequests(
+        req.params.receiverId
+      );
+
       return res.json(requests);
     } catch (e) {
       next(e);

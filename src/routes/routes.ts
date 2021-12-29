@@ -53,10 +53,6 @@ router.post("/post/delete", PostController.delete);
 router.post("/post/upload", multerMiddleware.single("files"), (req, res) => {
   res.json({ path: req.file.path });
 });
-router.get(
-  "/post/username/:username",
-  PostController.getAllUserPostsByUsername
-);
 router.get("/post/id/:userId", PostController.getAllUserPostsByUserId);
 router.get("/post/all", PostController.getAllPosts);
 router.patch("/post/edit", PostController.edit);

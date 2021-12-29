@@ -3,10 +3,9 @@ import { PostService } from "../services/post-service";
 export class PostController {
   public static async create(req, res, next) {
     try {
-      const { username } = req.cookies;
-      const { text, fileName } = req.body;
+      const { userId, text, fileName } = req.body;
       const filePath = `http://localhost:3010/${fileName}`;
-      const postData = await PostService.create(username, text, filePath);
+      const postData = await PostService.create(userId, text, filePath);
 
       return res.json(postData);
     } catch (e) {
@@ -29,10 +28,9 @@ export class PostController {
 
   public static async comment(req, res, next) {
     try {
-      const { id, text } = req.body;
-      const { username } = req.cookies;
+      const { id, text, userId } = req.body;
 
-      const postData = await PostService.comment(id, username, text);
+      const postData = await PostService.comment(id, text, userId);
 
       return res.json(postData);
     } catch (e) {
@@ -47,18 +45,6 @@ export class PostController {
       const postData = await PostService.delete(id);
 
       return res.json(postData);
-    } catch (e) {
-      next(e);
-    }
-  }
-
-  public static async getAllUserPostsByUsername(req, res, next) {
-    try {
-      const username = req.params.username;
-
-      const userPosts = await PostService.getAllUserPostsByUsername(username);
-
-      return res.json(userPosts);
     } catch (e) {
       next(e);
     }

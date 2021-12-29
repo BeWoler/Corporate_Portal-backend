@@ -1,11 +1,16 @@
 import { PostModel } from "../models/post-model";
 import { CommentModel } from "../models/comment-model";
-import { UserModel } from "../models/user-model";
 import { PostDto } from "../dtos/post-dto";
+import mongoose from "mongoose";
 
 export class PostService {
-  public static async create(username: string, text: string, file: string) {
+  public static async create(
+    userId: mongoose.ObjectId,
+    text: string,
+    file: string
+  ) {
     const data = new Date();
+
     const objDate = {
       year: data.getFullYear(),
       month: data.getMonth() + 1,
@@ -13,10 +18,9 @@ export class PostService {
       hours: data.getHours(),
       minutes: data.getMinutes(),
     };
-    const user = await UserModel.findOne({ username });
+
     const post = await PostModel.create({
-      user: user._id,
-      author: user.username,
+      user: userId,
       time: objDate,
       file: file,
       text,
@@ -39,8 +43,13 @@ export class PostService {
     };
   }
 
-  public static async comment(id: string, username: string, text: string) {
+  public static async comment(
+    id: string,
+    text: string,
+    userId: mongoose.ObjectId
+  ) {
     const data = new Date();
+
     const objDate = {
       year: data.getFullYear(),
       month: data.getMonth() + 1,
@@ -48,25 +57,19 @@ export class PostService {
       hours: data.getHours(),
       minutes: data.getMinutes(),
     };
-    const user = await UserModel.findOne({ username });
+
     const post = await PostModel.findOne({ _id: id });
     const comment = await CommentModel.create({
       post: id,
-      user: user.id,
-      author: username,
-      avatar: user.avatar,
+      user: userId,
       time: objDate,
       text: text,
     });
 
-    post.comments.push(comment);
+    post.comments.push(comment._id);
     post.save();
 
-    const postDto = new PostDto(post);
-
-    return {
-      post: postDto,
-    };
+    return post;
   }
 
   public static async delete(id: string) {
@@ -74,18 +77,24 @@ export class PostService {
     return post;
   }
 
-  public static async getAllUserPostsByUsername(username: string) {
-    const posts = await PostModel.find({ author: username });
-    return posts;
-  }
-
-  public static async getAllUserPostsByUserId(userId: string) {
-    const posts = await PostModel.find({ user: userId });
+  public static async getAllUserPostsByUserId(userId: mongoose.ObjectId) {
+    const populateQuery = [
+      {
+        path: "user",
+      },
+      {
+        path: "comments",
+        populate: { path: "user" },
+      },
+    ];
+    const posts = await PostModel.find({ user: userId }).populate(
+      populateQuery
+    );
     return posts;
   }
 
   public static async getAllPosts() {
-    const posts = await PostModel.find();
+    const posts = await PostModel.find().populate("user");
     return posts;
   }
 }
