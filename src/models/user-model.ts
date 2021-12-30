@@ -17,6 +17,7 @@ interface User {
   phone: number;
   description: string;
   friends: any;
+  messagesFromFriend: boolean;
   privatePage: boolean;
 }
 
@@ -37,6 +38,7 @@ const userSchema = new Schema<User>({
   skype: { type: String, default: "" },
   phone: { type: Number },
   friends: { type: Array, default: [], unique: false, ref: "User" },
+  messagesFromFriend: { type: Boolean, default: false },
   privatePage: { type: Boolean, default: false },
 });
 

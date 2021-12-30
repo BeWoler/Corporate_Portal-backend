@@ -16,6 +16,7 @@ export class UserDto {
   phone: number;
   friends: any;
   description: string;
+  messagesFromFriend: boolean;
   privatePage: boolean;
   id: ObjectId;
 
@@ -35,6 +36,7 @@ export class UserDto {
     this.skype = model.skype;
     this.phone = model.phone;
     this.friends = model.friends;
+    this.messagesFromFriend = model.messagesFromFriend;
     this.privatePage = model.privatePage;
     this.description = model.description;
   }
