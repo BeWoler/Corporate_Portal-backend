@@ -2,10 +2,13 @@ import { ConversationModel } from "../models/conversation-model";
 
 export class ConversationService {
   public static async conversation(senderId: string, receiverId: string) {
-    const conversation = await ConversationModel.findOne({
-      $in: { members: { senderId, receiverId } },
+    const candidateSender = await ConversationModel.findOne({
+      members: senderId,
     });
-    if (conversation) {
+    const candidateReceiver = await ConversationModel.findOne({
+      members: receiverId,
+    });
+    if (candidateSender && candidateReceiver) {
       return null;
     }
     const newConversation = await ConversationModel.create({
@@ -18,6 +21,7 @@ export class ConversationService {
     const conversation = await ConversationModel.find({
       members: { $in: [userId] },
     }).populate("members");
+
     return conversation;
   }
 }
