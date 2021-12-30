@@ -94,7 +94,16 @@ export class PostService {
   }
 
   public static async getAllPosts() {
-    const posts = await PostModel.find().populate("user");
+    const populateQuery = [
+      {
+        path: "user",
+      },
+      {
+        path: "comments",
+        populate: { path: "user" },
+      },
+    ];
+    const posts = await PostModel.find().populate(populateQuery);
     return posts;
   }
 }

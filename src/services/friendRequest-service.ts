@@ -45,6 +45,19 @@ export class FriendRequestService {
     return request;
   }
 
+  public static async delete(userId: string, friendId: string) {
+    const user = await UserModel.findOne({ _id: userId });
+    const friend = await UserModel.findOne({ _id: friendId });
+
+    friend.friends.pull(userId);
+    friend.save();
+
+    user.friends.pull(friendId);
+    user.save();
+
+    return user;
+  }
+
   public static async getRequests(receiverId: string) {
     const requests = await FriendRequestModel.find({
       receiver: receiverId,

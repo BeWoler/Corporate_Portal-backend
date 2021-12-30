@@ -7,7 +7,7 @@ interface Like {
 }
 
 const likeSchema = new Schema<Like>({
-  user: { type: Schema.Types.ObjectId, ref: "User", unique: true },
+  user: { type: Schema.Types.ObjectId, ref: "User" },
   post: { type: Schema.Types.ObjectId, ref: "Post" },
 });
 

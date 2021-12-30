@@ -38,6 +38,17 @@ export class FriendRequestController {
     }
   }
 
+  public static async delete(req, res, next) {
+    try {
+      const { userId, friendId } = req.body;
+      const deleteFriend = await FriendRequestService.delete(userId, friendId);
+
+      return res.json(deleteFriend);
+    } catch (e) {
+      next(e);
+    }
+  }
+
   public static async getRequests(req, res, next) {
     try {
       const requests = await FriendRequestService.getRequests(
