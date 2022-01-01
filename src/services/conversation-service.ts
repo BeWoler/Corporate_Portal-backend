@@ -3,12 +3,13 @@ import { ConversationModel } from "../models/conversation-model";
 export class ConversationService {
   public static async conversation(senderId: string, receiverId: string) {
     const candidateSender = await ConversationModel.findOne({
-      members: senderId,
+      members: [senderId, receiverId],
     });
     const candidateReceiver = await ConversationModel.findOne({
-      members: receiverId,
+      members: [receiverId, senderId],
     });
-    if (candidateSender && candidateReceiver) {
+    const found = candidateReceiver || candidateSender;
+    if (found) {
       return null;
     }
     const newConversation = await ConversationModel.create({
