@@ -7,6 +7,20 @@ export class ConversetionController {
         req.body.senderId,
         req.body.receiverId
       );
+
+      return res.json(conversation);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  public static async deleteConversation(req, res, next) {
+    try {
+      const { conversationId } = req.body;
+      const conversation = await ConversationService.deleteConversation(
+        conversationId
+      );
+
       return res.json(conversation);
     } catch (e) {
       next(e);
@@ -15,7 +29,9 @@ export class ConversetionController {
 
   public static async getConversations(req, res, next) {
     try {
-      const conversations = await ConversationService.getConversations(req.params.userId);
+      const conversations = await ConversationService.getConversations(
+        req.params.userId
+      );
       return res.json(conversations);
     } catch (e) {
       next(e);
