@@ -1,4 +1,4 @@
-import { Schema, model, Date } from "mongoose";
+import { Schema, model } from "mongoose";
 import mongoose from "mongoose";
 
 interface Post {
