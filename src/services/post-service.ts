@@ -9,19 +9,10 @@ export class PostService {
     text: string,
     file: string
   ) {
-    const data = new Date();
-
-    const objDate = {
-      year: data.getFullYear(),
-      month: data.getMonth() + 1,
-      day: data.getDate(),
-      hours: data.getHours(),
-      minutes: data.getMinutes(),
-    };
 
     const post = await PostModel.create({
       user: userId,
-      time: objDate,
+      time: new Date(),
       file: file,
       text,
     });
@@ -48,21 +39,12 @@ export class PostService {
     text: string,
     userId: mongoose.ObjectId
   ) {
-    const data = new Date();
-
-    const objDate = {
-      year: data.getFullYear(),
-      month: data.getMonth() + 1,
-      day: data.getDate(),
-      hours: data.getHours(),
-      minutes: data.getMinutes(),
-    };
 
     const post = await PostModel.findOne({ _id: id });
     const comment = await CommentModel.create({
       post: id,
       user: userId,
-      time: objDate,
+      time: new Date(),
       text: text,
     });
 

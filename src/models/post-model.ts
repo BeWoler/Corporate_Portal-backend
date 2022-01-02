@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, Date } from "mongoose";
 import mongoose from "mongoose";
 
 interface Post {
@@ -13,9 +13,9 @@ interface Post {
 const postSchema = new Schema<Post>({
   user: { type: Schema.Types.ObjectId, ref: "User" },
   text: { type: String },
-  time: { type: Object },
+  time: { type: Date },
   file: { type: String },
-  likes: { type: Array, ref: "Like"},
+  likes: { type: Array, ref: "Like" },
   comments: { type: Array, ref: "Comment" },
 });
 

@@ -10,6 +10,7 @@ export class MessageService {
       conversationId,
       sender,
       text,
+      date: new Date(),
     });
     return message.populate("sender");
   }
