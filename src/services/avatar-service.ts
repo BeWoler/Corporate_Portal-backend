@@ -9,7 +9,7 @@ export class AvatarService {
     );
 
     const userDto = new UserDto(user);
-    
+
     return {
       user: userDto,
     };

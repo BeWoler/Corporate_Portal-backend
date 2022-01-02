@@ -34,45 +34,42 @@ const io = require("socket.io")(server, {
   },
 });
 
-
-
 let users = [];
-const addUser = (userId, socketId) => {
-  !users.some(user => user.userId === userId) &&
-    users.push({ userId, socketId })
-}
-const removeUser = (socketId) => {
-  users = users.filter(user => user.socketId !== socketId);
-}
-const getUser = (userId) => {
-  return users.find(user => user.userId === userId);
-}
-io.on("connection", (socket) => {
+const addUser = (userId: string, socketId: string) => {
+  !users.some((user) => user.userId === userId) &&
+    users.push({ userId, socketId });
+};
+const removeUser = (socketId: string) => {
+  users = users.filter((user) => user.socketId !== socketId);
+};
+const getUser = (userId: string) => {
+  return users.find((user) => user.userId === userId);
+};
+io.on("connection", (socket: any) => {
   console.log("socket connected", socket.id);
-  io.emit("welcome", "helloooo");
-
-  socket.on("addUser", userId => {
+  socket.on("addUser", (userId: string) => {
     addUser(userId, socket.id);
-    io.emit("getUsers", users)
-  })
+    io.emit("getUsers", users);
+  });
 
-  socket.on("sendMessage", ({sender, receiverId, text}) => {
+  socket.on("sendMessage", ({ sender, receiverId, text }) => {
     const user = getUser(receiverId);
-    io.to(user.socketId).emit("getMessage", {
-      sender,
-      receiverId,
-      text
-    })
-  })
+    if (user) {
+      io.to(user.socketId).emit("getMessage", {
+        sender,
+        receiverId,
+        text,
+      });
+    }
+    return;
+  });
 
   socket.on("disconnect", () => {
-    console.log("a user disconnected");
+    console.log(`a user ${socket.id} disconnected`);
     removeUser(socket.id);
-    io.emit("getUsers", users)
-  })
+    io.emit("getUsers", users);
+  });
 });
-
-
 
 const connection = async () => {
   await mongoose.connect(process.env.DB_URL);

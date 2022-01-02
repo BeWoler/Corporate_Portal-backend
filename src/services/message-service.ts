@@ -11,11 +11,13 @@ export class MessageService {
       sender,
       text,
     });
-    return message;
+    return message.populate("sender");
   }
 
   public static async getMessages(conversationId: string) {
-    const messages = await MessageModel.find({ conversationId }).populate('sender');
+    const messages = await MessageModel.find({ conversationId }).populate(
+      "sender"
+    );
     return messages;
   }
 }
