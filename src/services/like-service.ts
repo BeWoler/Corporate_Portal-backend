@@ -7,9 +7,9 @@ export class LikeService {
     const candidateLike = await LikeModel.findOne({ post: postId, user: user });
     const post = await PostModel.findOne({ _id: postId });
     if (candidateLike) {
-      candidateLike.delete();
-      post.likes.pull(user);
-      post.save();
+      await candidateLike.delete();
+      await post.likes.pull(user);
+      await post.save();
       return { candidateLike };
     }
     const like = await LikeModel.create({
@@ -17,8 +17,8 @@ export class LikeService {
       post: postId,
     });
 
-    post.likes.push(user);
-    post.save();
+    await post.likes.push(user);
+    await post.save();
 
     return { like };
   }
