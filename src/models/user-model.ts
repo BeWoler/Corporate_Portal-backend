@@ -17,6 +17,7 @@ interface User {
   phone: number;
   description: string;
   friends: any;
+  blockedUser: any;
   messagesFromFriend: boolean;
   privatePage: boolean;
 }
@@ -38,6 +39,7 @@ const userSchema = new Schema<User>({
   skype: { type: String, default: "" },
   phone: { type: Number },
   friends: { type: Array, default: [], unique: false, ref: "User" },
+  blockedUser: { type: Array, default: [] },
   messagesFromFriend: { type: Boolean, default: false },
   privatePage: { type: Boolean, default: false },
 });

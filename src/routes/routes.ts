@@ -59,6 +59,8 @@ router.get("/post/id/:userId", PostController.getAllUserPostsByUserId);
 router.get("/post/all", PostController.getAllPosts);
 router.patch("/post/edit", PostController.edit);
 
+router.post("/user/block", UserController.blockUser);
+router.post("/user/unblock", UserController.unblockUser);
 router.patch(
   "/changePassword",
   body("newPassword").isLength({ min: 3, max: 16 }),
