@@ -3,6 +3,7 @@ import { TokenService } from "../services/token-service";
 import { UserDto } from "../dtos/user-dto";
 import bcrypt from "bcrypt";
 import { ApiError } from "../exceptions/api-error";
+import { UserPasswordModel } from "../models/userpassword-model";
 
 export class ChangePasswordService {
   public static async edit(
@@ -11,9 +12,12 @@ export class ChangePasswordService {
     oldPassword: string
   ) {
     const candidateToChange = await UserModel.findOne({ username });
+    const candidatePassword = await UserPasswordModel.findOne({
+      user: candidateToChange._id,
+    });
     const isOldPassEqu = await bcrypt.compare(
       oldPassword,
-      candidateToChange.password
+      candidatePassword.password
     );
     if (!isOldPassEqu) {
       throw ApiError.BadRequest("Incorrect old password", [
@@ -22,7 +26,7 @@ export class ChangePasswordService {
     }
     const isPassEqu = await bcrypt.compare(
       newPassword,
-      candidateToChange.password
+      candidatePassword.password
     );
     if (isPassEqu) {
       throw ApiError.BadRequest(
@@ -31,12 +35,10 @@ export class ChangePasswordService {
       );
     }
     const hashPassword = await bcrypt.hash(newPassword, 3);
-    const user = await UserModel.findOneAndUpdate(
-      { username },
-      { password: hashPassword }
-    );
+    await candidatePassword.update({ password: hashPassword });
+    await candidatePassword.save();
 
-    const userDto = new UserDto(user);
+    const userDto = new UserDto(candidateToChange);
 
     const tokens = TokenService.generateTokens({ ...userDto });
     await TokenService.saveToken(userDto.id, tokens.refreshToken);

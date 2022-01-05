@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import { ApiError } from "../exceptions/api-error";
 import { TokenService } from "../services/token-service";
 import { UserDto } from "../dtos/user-dto";
+import { UserPasswordModel } from "../models/userpassword-model";
 
 export class RegistrationService {
   public static async registration(
@@ -13,13 +14,13 @@ export class RegistrationService {
     lastName: string
   ) {
     const candidateEmail = await UserModel.findOne({ email });
-    const candidateUserName = await UserModel.findOne({ username });
+    const candidateUsername = await UserModel.findOne({ username });
     if (candidateEmail) {
       throw ApiError.BadRequest("Email already exist", [
         { message: "Email already exist" },
       ]);
     }
-    if (candidateUserName) {
+    if (candidateUsername) {
       throw ApiError.BadRequest("Username already exist", [
         { message: "Username already exist" },
       ]);
@@ -28,10 +29,13 @@ export class RegistrationService {
 
     const user = await UserModel.create({
       email,
-      password: hashPassword,
       username,
       firstName: firstName,
       lastName: lastName,
+    });
+    const userPassword = await UserPasswordModel.create({
+      user: user._id,
+      password: hashPassword,
     });
 
     const userDto = new UserDto(user);
@@ -41,6 +45,7 @@ export class RegistrationService {
 
     return {
       user: userDto,
+      userPassword,
       ...tokens,
     };
   }

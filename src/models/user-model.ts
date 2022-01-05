@@ -2,7 +2,6 @@ import { Schema, model } from "mongoose";
 
 interface User {
   email: string;
-  password: string;
   username: string;
   avatar: string;
   city: string;
@@ -24,7 +23,6 @@ interface User {
 
 const userSchema = new Schema<User>({
   email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
   username: { type: String, required: true, unique: true },
   avatar: { type: String },
   city: { type: String, default: "" },

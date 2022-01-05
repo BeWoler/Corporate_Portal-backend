@@ -3,16 +3,22 @@ import bcrypt from "bcrypt";
 import { ApiError } from "../exceptions/api-error";
 import { TokenService } from "../services/token-service";
 import { UserDto } from "../dtos/user-dto";
+import { UserPasswordModel } from "../models/userpassword-model";
 
 export class LoginService {
   public static async login(username: string, password: string) {
     const user = await UserModel.findOne({ username });
+    const userPassword = await UserPasswordModel.findOne({ user: user._id });
     if (!user) {
-      throw ApiError.BadRequest("User does not exist", [{message: "User does not exist"}]);
+      throw ApiError.BadRequest("User does not exist", [
+        { message: "User does not exist" },
+      ]);
     }
-    const isPassEqu = await bcrypt.compare(password, user.password);
+    const isPassEqu = await bcrypt.compare(password, userPassword.password);
     if (!isPassEqu) {
-      throw ApiError.BadRequest("Incorrect password", [{message: "Incorrect password"}]);
+      throw ApiError.BadRequest("Incorrect password", [
+        { message: "Incorrect password" },
+      ]);
     }
 
     const userDto = new UserDto(user);
@@ -22,6 +28,7 @@ export class LoginService {
 
     return {
       user: userDto,
+      userPassword,
       ...tokens,
     };
   }
@@ -34,7 +41,7 @@ export class LoginService {
     if (!userData || !tokenFromDb) {
       throw ApiError.UnauthorizedError();
     }
-    const user = await UserModel.findById(userData.id).populate('friends');
+    const user = await UserModel.findById(userData.id).populate("friends");
     const userDto = new UserDto(user);
 
     const tokens = TokenService.generateTokens({ ...userDto });
