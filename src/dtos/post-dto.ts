@@ -5,7 +5,7 @@ export class PostDto {
   text: string;
   time: object;
   file: string;
-  likes: any;
+  likes: object[];
   comments: object[];
 
   constructor(model) {

@@ -1,4 +1,4 @@
-import { ObjectId } from "mongoose";
+import { Mongoose, ObjectId, Schema } from "mongoose";
 
 export class UserDto {
   email: string;
@@ -14,11 +14,12 @@ export class UserDto {
   education: string;
   skype: string;
   phone: number;
-  friends: any;
+  friends: string[];
   description: string;
-  blockedUser: any;
+  blockedUser: string[];
   messagesFromFriend: boolean;
   privatePage: boolean;
+  role: string;
   id: ObjectId;
 
   constructor(model) {
@@ -41,5 +42,6 @@ export class UserDto {
     this.messagesFromFriend = model.messagesFromFriend;
     this.privatePage = model.privatePage;
     this.description = model.description;
+    this.role = model.role;
   }
 }

@@ -9,7 +9,6 @@ export class PostService {
     text: string,
     file: string
   ) {
-
     const post = await PostModel.create({
       user: userId,
       time: new Date(),
@@ -39,7 +38,6 @@ export class PostService {
     text: string,
     userId: mongoose.ObjectId
   ) {
-
     const post = await PostModel.findOne({ _id: id });
     const comment = await CommentModel.create({
       post: id,
@@ -48,8 +46,8 @@ export class PostService {
       text: text,
     });
 
-    post.comments.push(comment._id);
-    post.save();
+    await post.comments.push(comment._id);
+    await post.save();
 
     return post;
   }

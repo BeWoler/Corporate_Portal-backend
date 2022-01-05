@@ -19,6 +19,7 @@ interface User {
   blockedUser: any;
   messagesFromFriend: boolean;
   privatePage: boolean;
+  role: string;
 }
 
 const userSchema = new Schema<User>({
@@ -40,6 +41,7 @@ const userSchema = new Schema<User>({
   blockedUser: { type: Array, default: [] },
   messagesFromFriend: { type: Boolean, default: false },
   privatePage: { type: Boolean, default: false },
+  role: { type: String, default: "member" },
 });
 
 export const UserModel = model<User>("User", userSchema);
