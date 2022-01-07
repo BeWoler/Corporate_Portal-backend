@@ -7,11 +7,11 @@ import { UserPasswordModel } from "../models/userpassword-model";
 
 export class ChangePasswordService {
   public static async edit(
-    username: string,
+    userId: string,
     newPassword: string,
     oldPassword: string
   ) {
-    const candidateToChange = await UserModel.findOne({ username });
+    const candidateToChange = await UserModel.findOne({ _id: userId });
     const candidatePassword = await UserPasswordModel.findOne({
       user: candidateToChange._id,
     });

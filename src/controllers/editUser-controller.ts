@@ -3,9 +3,9 @@ import { EditUserService } from "../services/editUser-service";
 export class EditUserController {
   public static async editUser(req, res, next) {
     try {
-      const { username } = req.cookies;
-      const userInfo = req.body;
-      const userData = await EditUserService.editUser(username, userInfo);
+      const userId = req.body.userId;
+      const userInfo = req.body.userInfo;
+      const userData = await EditUserService.editUser(userId, { ...userInfo });
 
       res.cookie("refreshToken", userData.refreshToken, {
         maxAge: 2 * 24 * 60 * 60 * 1000,
@@ -18,9 +18,8 @@ export class EditUserController {
       });
 
       return res.json(userData);
-    }
-    catch (e) {
-      next(e)
+    } catch (e) {
+      next(e);
     }
   }
 }

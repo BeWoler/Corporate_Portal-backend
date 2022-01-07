@@ -9,10 +9,9 @@ export class ChangePasswordController {
       if (!errors.isEmpty()) {
         return next(ApiError.BadRequest("Validation error", [{ ...errors }]));
       }
-      const { username } = req.cookies;
-      const { oldPassword, newPassword } = req.body;
+      const { userId, oldPassword, newPassword } = req.body;
       const userData = await ChangePasswordService.edit(
-        username,
+        userId,
         newPassword,
         oldPassword
       );
