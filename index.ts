@@ -4,6 +4,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import { router } from "./src/routes/routes";
+import { adminRouter } from "./src/Admin/AdminRoutes/routes";
 
 const errorMiddleware = require("./src/middlewares/error-middleware");
 
@@ -22,6 +23,7 @@ app.use(
 
 app.use(cookieParser());
 app.use("/api", router);
+app.use("/admin", adminRouter);
 app.use("/files", express.static("./files"));
 app.use(errorMiddleware);
 
