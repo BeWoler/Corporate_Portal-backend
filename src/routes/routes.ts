@@ -6,7 +6,6 @@ import { RefreshController } from "../controllers/refresh-controller";
 import { LogoutController } from "../controllers/logout-controller";
 import { DeleteController } from "../controllers/delete-controller";
 import { ChangePasswordController } from "../controllers/changePassword-controller";
-import authMiddleware from "../middlewares/auth-middleware";
 import { EditUserController } from "../controllers/editUser-controller";
 import { PostController } from "../controllers/post-controller";
 import { LikeController } from "../controllers/like-controller";
@@ -15,6 +14,7 @@ import { ConversetionController } from "../controllers/conversation-controller";
 import { MessageController } from "../controllers/message-controller";
 import { UserController } from "../controllers/user-controller";
 import { FriendRequestController } from "../controllers/friendRequest-controller";
+import authMiddleware from "../middlewares/auth-middleware";
 const multerMiddleware = require("../middlewares/multer-middleware");
 
 process.setMaxListeners(0);
