@@ -9,6 +9,7 @@ export class DeleteController {
 
       res.clearCookie("refreshToken");
       res.clearCookie("username");
+      res.clearCookie("role");
 
       return res.json(userData);
     } catch (e) {

@@ -7,6 +7,7 @@ export class LogoutController {
       const token = await LogoutService.logout(refreshToken);
 
       res.clearCookie("refreshToken");
+      res.clearCookie("username");
       res.clearCookie("role");
 
       return res.json(token);
