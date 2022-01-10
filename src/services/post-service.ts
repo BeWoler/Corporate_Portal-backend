@@ -1,6 +1,5 @@
 import { PostModel } from "../models/post-model";
 import { CommentModel } from "../models/comment-model";
-import { PostDto } from "../dtos/post-dto";
 import mongoose from "mongoose";
 
 export class PostService {
@@ -16,20 +15,14 @@ export class PostService {
       text,
     });
 
-    const postDto = new PostDto(post);
-
-    return {
-      post: postDto,
-    };
+    return post.populate({path: "user"});
   }
 
   public static async edit(id: string, text: string) {
     const post = await PostModel.findOneAndUpdate({ _id: id }, { text: text });
 
-    const postDto = new PostDto(post);
-
     return {
-      post: postDto,
+      post: post,
     };
   }
 
