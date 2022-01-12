@@ -7,13 +7,13 @@ import { UserPasswordModel } from "../models/userpassword-model";
 
 export class LoginService {
   public static async login(username: string, password: string) {
-    const user = await UserModel.findOne({ username });
-    const userPassword = await UserPasswordModel.findOne({ user: user._id });
+    const user = await UserModel.findOne({ username: username });
     if (!user) {
       throw ApiError.BadRequest("User does not exist", [
         { message: "User does not exist" },
       ]);
     }
+    const userPassword = await UserPasswordModel.findOne({ user: user._id });
     const isPassEqu = await bcrypt.compare(password, userPassword.password);
     if (!isPassEqu) {
       throw ApiError.BadRequest("Incorrect password", [
@@ -27,7 +27,7 @@ export class LoginService {
     await TokenService.saveToken(userDto.id, tokens.refreshToken);
 
     return {
-      user: userDto,
+      user: user,
       userPassword,
       ...tokens,
     };
