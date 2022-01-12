@@ -51,7 +51,7 @@ const seeder = async () => {
       user: user._id,
       post: post._id,
     });
-    await post.likes.push(user._id);
+    await post.likes.push(user._id.toString());
     await post.save();
 
     console.log("seed done", user, userPassword, post, comment, like);
