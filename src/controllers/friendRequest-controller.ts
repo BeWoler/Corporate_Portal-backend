@@ -1,7 +1,14 @@
 import { FriendRequestService } from "../services/friendRequest-service";
+import * as express from "express";
+
+const ObjectId = require("mongodb").ObjectId;
 
 export class FriendRequestController {
-  public static async request(req, res, next) {
+  public static async request(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
     try {
       const { receiverId, senderId } = req.body;
       const request = await FriendRequestService.request(receiverId, senderId);
@@ -12,7 +19,11 @@ export class FriendRequestController {
     }
   }
 
-  public static async accept(req, res, next) {
+  public static async accept(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
     try {
       const { receiverId, senderId, requestId } = req.body;
       const accept = await FriendRequestService.accept(
@@ -27,7 +38,11 @@ export class FriendRequestController {
     }
   }
 
-  public static async decline(req, res, next) {
+  public static async decline(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
     try {
       const { requestId } = req.body;
       const decline = await FriendRequestService.decline(requestId);
@@ -38,7 +53,11 @@ export class FriendRequestController {
     }
   }
 
-  public static async delete(req, res, next) {
+  public static async delete(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
     try {
       const { userId, friendId } = req.body;
       const deleteFriend = await FriendRequestService.delete(userId, friendId);
@@ -49,10 +68,14 @@ export class FriendRequestController {
     }
   }
 
-  public static async getRequests(req, res, next) {
+  public static async getRequests(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
     try {
       const requests = await FriendRequestService.getRequests(
-        req.params.receiverId
+        new ObjectId(req.params.receiverId)
       );
 
       return res.json(requests);

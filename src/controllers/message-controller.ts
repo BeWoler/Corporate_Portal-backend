@@ -1,7 +1,14 @@
 import { MessageService } from "../services/message-service";
+import * as express from "express";
+
+const ObjectId = require("mongodb").ObjectId;
 
 export class MessageController {
-  public static async message(req, res, next) {
+  public static async message(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
     try {
       const { conversationId, sender, text } = req.body;
       const message = await MessageService.message(
@@ -15,10 +22,14 @@ export class MessageController {
     }
   }
 
-  public static async getMessages(req, res, next) {
+  public static async getMessages(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
     try {
       const messages = await MessageService.getMessages(
-        req.params.conversationId
+        new ObjectId(req.params.conversationId)
       );
       return res.status(200).json(messages);
     } catch (e) {

@@ -1,7 +1,12 @@
 import { EditUserService } from "../services/editUser-service";
+import * as express from "express";
 
 export class EditUserController {
-  public static async editUser(req, res, next) {
+  public static async editUser(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
     try {
       const userId = req.body.userId;
       const userInfo = req.body.userInfo;

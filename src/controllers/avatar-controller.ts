@@ -1,7 +1,12 @@
 import { AvatarService } from "../services/avatar-service";
+import * as express from "express";
 
 export class AvatarController {
-  public static async save(req, res, next) {
+  public static async save(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
     try {
       if (req.file) {
         const { username } = req.cookies;

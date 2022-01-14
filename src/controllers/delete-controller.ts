@@ -1,7 +1,12 @@
 import { DeleteService } from "../services/delete-service";
+import * as express from "express";
 
 export class DeleteController {
-  public static async delete(req, res, next) {
+  public static async delete(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
     try {
       const { refreshToken } = req.cookies;
       const { userId } = req.body;

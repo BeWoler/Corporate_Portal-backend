@@ -1,7 +1,12 @@
 import { LoginService } from "../services/login-service";
+import * as express from "express";
 
 export class RefreshController {
-  public static async refresh(req, res, next) {
+  public static async refresh(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
     try {
       const { refreshToken } = req.cookies;
       const userData = await LoginService.refresh(refreshToken);
@@ -15,7 +20,7 @@ export class RefreshController {
         maxAge: 2 * 24 * 60 * 60 * 1000,
         httpOnly: true,
       });
-      
+
       return res.json(userData);
     } catch (e) {
       next(e);

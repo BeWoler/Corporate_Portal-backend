@@ -1,7 +1,12 @@
 import { LogoutService } from "../services/logout-service";
+import * as express from "express";
 
 export class LogoutController {
-  public static async logout(req, res, next) {
+  public static async logout(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
     try {
       const { refreshToken } = req.cookies;
       const token = await LogoutService.logout(refreshToken);

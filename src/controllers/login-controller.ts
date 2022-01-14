@@ -1,7 +1,12 @@
 import { LoginService } from "../services/login-service";
+import * as express from "express";
 
 export class LoginController {
-  public static async login(req, res, next) {
+  public static async login(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
     try {
       const { username, password } = req.body;
       const userData = await LoginService.login(username, password);

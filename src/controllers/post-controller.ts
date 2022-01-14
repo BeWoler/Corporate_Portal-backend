@@ -1,7 +1,12 @@
 import { PostService } from "../services/post-service";
+import * as express from "express";
 
 export class PostController {
-  public static async create(req, res, next) {
+  public static async create(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
     try {
       const { userId, text, fileName } = req.body;
       const filePath = `http://localhost:3010/${fileName}`;
@@ -13,7 +18,11 @@ export class PostController {
     }
   }
 
-  public static async edit(req, res, next) {
+  public static async edit(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
     try {
       const { id } = req.body;
       const { text } = req.body;
@@ -26,7 +35,11 @@ export class PostController {
     }
   }
 
-  public static async comment(req, res, next) {
+  public static async comment(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
     try {
       const { id, text, userId } = req.body;
 
@@ -38,7 +51,11 @@ export class PostController {
     }
   }
 
-  public static async delete(req, res, next) {
+  public static async delete(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
     try {
       const { id } = req.body;
 
@@ -50,7 +67,11 @@ export class PostController {
     }
   }
 
-  public static async getAllUserPostsByUserId(req, res, next) {
+  public static async getAllUserPostsByUserId(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
     try {
       const userId = req.params.userId;
 
@@ -62,7 +83,11 @@ export class PostController {
     }
   }
 
-  public static async getAllPosts(req, res, next) {
+  public static async getAllPosts(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
     try {
       const allPosts = await PostService.getAllPosts();
 

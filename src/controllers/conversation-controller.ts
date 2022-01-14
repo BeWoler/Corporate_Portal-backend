@@ -1,7 +1,14 @@
 import { ConversationService } from "../services/conversation-service";
+import * as express from "express";
+
+const ObjectId = require("mongodb").ObjectId;
 
 export class ConversetionController {
-  public static async conversation(req, res, next) {
+  public static async conversation(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
     try {
       const conversation = await ConversationService.conversation(
         req.body.senderId,
@@ -14,7 +21,11 @@ export class ConversetionController {
     }
   }
 
-  public static async deleteConversation(req, res, next) {
+  public static async deleteConversation(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
     try {
       const { conversationId } = req.body;
       const conversation = await ConversationService.deleteConversation(
@@ -27,10 +38,14 @@ export class ConversetionController {
     }
   }
 
-  public static async getConversations(req, res, next) {
+  public static async getConversations(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
     try {
       const conversations = await ConversationService.getConversations(
-        req.params.userId
+        new ObjectId(req.params.userId)
       );
       return res.json(conversations);
     } catch (e) {

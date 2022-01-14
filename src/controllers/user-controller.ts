@@ -1,9 +1,18 @@
 import { UserService } from "../services/user-service";
+import * as express from "express";
+
+const ObjectId = require("mongodb").ObjectId;
 
 export class UserController {
-  public static async getUserInfo(req, res, next) {
+  public static async getUserInfo(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
     try {
-      const user = await UserService.getUserInfo(req.params.userId);
+      const user = await UserService.getUserInfo(
+        new ObjectId(req.params.userId)
+      );
 
       return res.json(user);
     } catch (e) {
@@ -11,7 +20,11 @@ export class UserController {
     }
   }
 
-  public static async blockUser(req, res, next) {
+  public static async blockUser(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
     try {
       const userId = req.body.userId;
       const blockedUserId = req.body.blockedUserId;
@@ -23,11 +36,18 @@ export class UserController {
     }
   }
 
-  public static async unblockUser(req, res, next) {
+  public static async unblockUser(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
     try {
       const userId = req.body.userId;
       const blockedUserId = req.body.blockedUserId;
-      const unblockedUser = await UserService.unblockUser(userId, blockedUserId);
+      const unblockedUser = await UserService.unblockUser(
+        userId,
+        blockedUserId
+      );
 
       return res.json(unblockedUser);
     } catch (e) {
@@ -35,7 +55,11 @@ export class UserController {
     }
   }
 
-  public static async getUsers(req, res, next) {
+  public static async getUsers(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
     try {
       const args = req.query;
       const users = await UserService.getAllUsers(args);
