@@ -1,9 +1,14 @@
 import { AdminChangePasswordService } from "../AdminServices/admin-changeUserPassword-service";
 import { validationResult } from "express-validator";
 import { ApiError } from "../../exceptions/api-error";
+import * as express from "express";
 
 export class AdmiChangeUserPasswordController {
-  public static async edit(req, res, next) {
+  public static async edit(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {

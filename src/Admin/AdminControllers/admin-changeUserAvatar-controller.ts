@@ -1,7 +1,12 @@
 import { AdminChangeUserAvatarService } from "../AdminServices/admin-changeUserAvatar-service";
+import * as express from "express";
 
 export class AdminChangeUserAvatarController {
-  public static async save(req, res, next) {
+  public static async save(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
     try {
       const { userId, avatarUrl } = req.body;
       const imgPath = await AdminChangeUserAvatarService.save(

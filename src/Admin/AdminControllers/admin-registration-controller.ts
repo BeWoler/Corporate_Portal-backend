@@ -1,9 +1,14 @@
 import { AdminRegistrationService } from "../AdminServices/admin-registration-service";
 import { validationResult } from "express-validator";
 import { ApiError } from "../../exceptions/api-error";
+import * as express from "express";
 
 export class AdminRegistrationController {
-  public static async registration(req, res, next) {
+  public static async registration(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
