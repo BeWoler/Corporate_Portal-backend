@@ -1,5 +1,6 @@
 import { PostModel } from "../models/post-model";
 import { CommentModel } from "../models/comment-model";
+import { LikeModel } from "../models/like-model";
 import mongoose from "mongoose";
 
 export class PostService {
@@ -15,10 +16,10 @@ export class PostService {
       text,
     });
 
-    return post.populate({path: "user"});
+    return post.populate({ path: "user" });
   }
 
-  public static async edit(id: string, text: string) {
+  public static async edit(id: mongoose.ObjectId, text: string) {
     const post = await PostModel.findOneAndUpdate({ _id: id }, { text: text });
 
     return {
@@ -27,7 +28,7 @@ export class PostService {
   }
 
   public static async comment(
-    id: string,
+    id: mongoose.ObjectId,
     text: string,
     userId: mongoose.ObjectId
   ) {
@@ -45,9 +46,15 @@ export class PostService {
     return post;
   }
 
-  public static async delete(id: string) {
+  public static async delete(id: mongoose.ObjectId) {
     const post = await PostModel.findOneAndDelete({ _id: id });
-    return post;
+    const comment = await CommentModel.deleteMany({ post: id });
+    const like = await LikeModel.deleteMany({ post: id });
+    return {
+      post: post,
+      comment: comment,
+      like: like,
+    };
   }
 
   public static async getAllUserPostsByUserId(userId: mongoose.ObjectId) {

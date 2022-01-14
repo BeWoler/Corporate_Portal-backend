@@ -1,10 +1,11 @@
 import { UserModel } from "../../models/user-model";
 import { UserDto } from "../../dtos/user-dto";
-import bcrypt from "bcrypt";
 import { UserPasswordModel } from "../../models/userpassword-model";
+import bcrypt from "bcrypt";
+import mongoose from "mongoose";
 
 export class AdminChangePasswordService {
-  public static async edit(userId: string, newPassword: string) {
+  public static async edit(userId: mongoose.ObjectId, newPassword: string) {
     const candidateToChange = await UserModel.findOne({ _id: userId });
     const candidatePassword = await UserPasswordModel.findOne({
       user: candidateToChange._id,

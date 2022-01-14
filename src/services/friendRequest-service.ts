@@ -1,9 +1,13 @@
 import { FriendRequestModel } from "../models/friends-requests-model";
 import { UserModel } from "../models/user-model";
 import { UserDto } from "../dtos/user-dto";
+import mongoose from "mongoose";
 
 export class FriendRequestService {
-  public static async request(receiverId: string, senderId: string) {
+  public static async request(
+    receiverId: mongoose.ObjectId,
+    senderId: mongoose.ObjectId
+  ) {
     const candidateFriend = await FriendRequestModel.findOne({
       sender: senderId,
       receiver: receiverId,
@@ -19,9 +23,9 @@ export class FriendRequestService {
   }
 
   public static async accept(
-    receiverId: string,
-    senderId: string,
-    requestId: string
+    receiverId: mongoose.ObjectId,
+    senderId: mongoose.ObjectId,
+    requestId: mongoose.ObjectId
   ) {
     const receiver = await UserModel.findOneAndUpdate(
       { _id: receiverId },
@@ -38,14 +42,17 @@ export class FriendRequestService {
     return { receiver: receiverDto, sender: senderDto, request };
   }
 
-  public static async decline(requestId: string) {
+  public static async decline(requestId: mongoose.ObjectId) {
     const request = await FriendRequestModel.findOneAndDelete({
       _id: requestId,
     });
     return request;
   }
 
-  public static async delete(userId: string, friendId: string) {
+  public static async delete(
+    userId: mongoose.ObjectId,
+    friendId: mongoose.ObjectId
+  ) {
     const user = await UserModel.findOne({ _id: userId });
     const friend = await UserModel.findOne({ _id: friendId });
 
@@ -58,7 +65,7 @@ export class FriendRequestService {
     return user;
   }
 
-  public static async getRequests(receiverId: string) {
+  public static async getRequests(receiverId: mongoose.ObjectId) {
     const requests = await FriendRequestModel.find({
       receiver: receiverId,
     }).populate("sender");

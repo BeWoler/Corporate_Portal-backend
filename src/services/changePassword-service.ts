@@ -1,13 +1,14 @@
 import { UserModel } from "../models/user-model";
 import { TokenService } from "../services/token-service";
 import { UserDto } from "../dtos/user-dto";
-import bcrypt from "bcrypt";
 import { ApiError } from "../exceptions/api-error";
 import { UserPasswordModel } from "../models/userpassword-model";
+import bcrypt from "bcrypt";
+import mongoose from "mongoose";
 
 export class ChangePasswordService {
   public static async edit(
-    userId: string,
+    userId: mongoose.ObjectId,
     newPassword: string,
     oldPassword: string
   ) {

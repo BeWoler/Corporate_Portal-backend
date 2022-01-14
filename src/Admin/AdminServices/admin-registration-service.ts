@@ -1,8 +1,8 @@
 import { UserModel } from "../../models/user-model";
-import bcrypt from "bcrypt";
 import { ApiError } from "../../exceptions/api-error";
 import { UserDto } from "../../dtos/user-dto";
 import { UserPasswordModel } from "../../models/userpassword-model";
+import bcrypt from "bcrypt";
 
 export class AdminRegistrationService {
   public static async registration(

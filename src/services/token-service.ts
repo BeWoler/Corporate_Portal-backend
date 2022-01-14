@@ -1,6 +1,6 @@
 import { TokenModel } from "../models/token-model";
 import jwt from "jsonwebtoken";
-import { ObjectId } from "mongoose";
+import mongoose from "mongoose";
 
 export class TokenService {
   public static generateTokens(payload: object) {
@@ -34,7 +34,7 @@ export class TokenService {
     }
   }
 
-  public static async saveToken(userId: ObjectId, refreshToken: string) {
+  public static async saveToken(userId: mongoose.ObjectId, refreshToken: string) {
     const tokenData = await TokenModel.findOne({ user: userId });
     if (tokenData) {
       tokenData.refreshToken = refreshToken;

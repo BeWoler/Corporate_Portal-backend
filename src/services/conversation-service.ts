@@ -1,7 +1,11 @@
 import { ConversationModel } from "../models/conversation-model";
+import mongoose from "mongoose";
 
 export class ConversationService {
-  public static async conversation(senderId: string, receiverId: string) {
+  public static async conversation(
+    senderId: mongoose.ObjectId,
+    receiverId: mongoose.ObjectId
+  ) {
     const candidateSender = await ConversationModel.findOne({
       members: [senderId, receiverId],
     });
@@ -18,12 +22,14 @@ export class ConversationService {
     return newConversation;
   }
 
-  public static async deleteConversation(conversationId: string) {
-    const conversation = await ConversationModel.findOneAndDelete({ _id: conversationId});
+  public static async deleteConversation(conversationId: mongoose.ObjectId) {
+    const conversation = await ConversationModel.findOneAndDelete({
+      _id: conversationId,
+    });
     return conversation;
   }
 
-  public static async getConversations(userId: string) {
+  public static async getConversations(userId: mongoose.ObjectId) {
     const conversation = await ConversationModel.find({
       members: { $in: [userId] },
     }).populate("members");

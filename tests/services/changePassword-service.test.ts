@@ -2,9 +2,11 @@ import { ChangePasswordService } from "../../src/services/changePassword-service
 import * as dotenv from "dotenv";
 import mongoose from "mongoose";
 
+const ObjectId = require("mongodb").ObjectId;
+
 dotenv.config();
 
-const userId = "61e15956b449213699a20d3a";
+const userId = new ObjectId("61e15956b449213699a20d3a");
 
 beforeAll((done) => {
   mongoose.connect(process.env.DB_URL);

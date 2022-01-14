@@ -1,8 +1,9 @@
 import { UserModel } from "../models/user-model";
 import { UserDto } from "../dtos/user-dto";
+import mongoose from "mongoose";
 
 export class UserService {
-  public static async getUserInfo(userId: string) {
+  public static async getUserInfo(userId: mongoose.ObjectId) {
     const user = await UserModel.findOne({ _id: userId }).populate("friends");
 
     const userDto = new UserDto(user);
@@ -12,7 +13,10 @@ export class UserService {
     };
   }
 
-  public static async blockUser(userId: string, blockedUserId: string) {
+  public static async blockUser(
+    userId: mongoose.ObjectId,
+    blockedUserId: mongoose.ObjectId
+  ) {
     await UserModel.findOneAndUpdate(
       { _id: userId },
       { $addToSet: { blockedUser: blockedUserId } }
@@ -21,7 +25,10 @@ export class UserService {
     return blockedUserId;
   }
 
-  public static async unblockUser(userId: string, blockedUserId: string) {
+  public static async unblockUser(
+    userId: mongoose.ObjectId,
+    blockedUserId: mongoose.ObjectId
+  ) {
     const user = await UserModel.findOne({ _id: userId });
 
     await user.blockedUser.pull(blockedUserId);
