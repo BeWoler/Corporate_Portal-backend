@@ -1,6 +1,8 @@
 import { PostService } from "../services/post-service";
 import * as express from "express";
 
+const ObjectId = require("mongodb").ObjectId;
+
 export class PostController {
   public static async create(
     req: express.Request,
@@ -73,7 +75,7 @@ export class PostController {
     next: express.NextFunction
   ) {
     try {
-      const userId = req.params.userId;
+      const userId = new ObjectId(req.params.userId);
 
       const userPosts = await PostService.getAllUserPostsByUserId(userId);
 
