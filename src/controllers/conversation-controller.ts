@@ -1,8 +1,6 @@
 import { ConversationService } from "../services/conversation-service";
 import * as express from "express";
 
-const ObjectId = require("mongodb").ObjectId;
-
 export class ConversetionController {
   public static async conversation(
     req: express.Request,
@@ -45,7 +43,7 @@ export class ConversetionController {
   ) {
     try {
       const conversations = await ConversationService.getConversations(
-        new ObjectId(req.params.userId)
+        req.params.userId
       );
       return res.json(conversations);
     } catch (e) {
