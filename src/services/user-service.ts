@@ -37,7 +37,7 @@ export class UserService {
     return blockedUserId;
   }
 
-  public static async getAllUsers(args: object) {
+  public static async getAllUsers(args?: object) {
     const users = await UserModel.find(args);
     return users;
   }
