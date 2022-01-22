@@ -16,6 +16,7 @@ import { UserController } from "../controllers/user-controller";
 import { FriendRequestController } from "../controllers/friendRequest-controller";
 import authMiddleware from "../middlewares/auth-middleware";
 const multerMiddleware = require("../middlewares/multer-middleware");
+const multerAvatarMiddleware = require("../middlewares/multerAvatar-middleware");
 
 process.setMaxListeners(0);
 
@@ -32,7 +33,11 @@ router.post("/logout", LogoutController.logout);
 router.post("/delete", authMiddleware, DeleteController.delete);
 
 router.post("/like", authMiddleware, LikeController.like);
-router.post("/avatar", multerMiddleware.single("image"), AvatarController.save);
+router.post(
+  "/avatar",
+  multerAvatarMiddleware.single("image"),
+  AvatarController.save
+);
 
 router.post(
   "/messenger/conversation",
