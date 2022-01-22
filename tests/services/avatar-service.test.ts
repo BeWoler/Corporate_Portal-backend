@@ -15,13 +15,13 @@ beforeAll((done) => {
 
 describe("Avatar service test", () => {
   it("Change avatar data in user model", async () => {
-    const res = AvatarService.save(userId, "localImg.png").then((res) => {
+    await AvatarService.save(userId, "localImg.png").then((res) => {
       expect(res.user.avatar).toBe("http://localhost:3010/localImg.png");
     });
   });
 
   it("Change avatar data with incorrect file type", async () => {
-    const res = AvatarService.save(userId, "localImg.exe").catch((err) => {
+    await AvatarService.save(userId, "localImg.exe").catch((err) => {
       expect(err.status).toBe(500);
     });
   });

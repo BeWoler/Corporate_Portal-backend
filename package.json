@@ -35,7 +35,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "seed": "tsc && node dist/src/seeds/seeds.js",
     "test:unit": "jest --config-jest.config.ts",
-    "test:watch": "jest --watch --config-jest.config.ts"
+    "test:watch": "jest --config-jest.config.ts --findRelatedTests"
   },
   "repository": {
     "type": "git",
