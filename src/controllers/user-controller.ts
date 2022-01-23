@@ -64,9 +64,7 @@ export class UserController {
       const args = req.query;
       const limit = req.query.limit;
       const users = await UserService.getAllUsers(args, +limit);
-      return (
-        res.header({ "x-users-length": users.length }), res.json(users.users)
-      );
+      return res.json(users);
     } catch (e) {
       next(e);
     }
