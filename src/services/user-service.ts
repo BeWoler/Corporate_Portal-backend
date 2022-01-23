@@ -37,8 +37,12 @@ export class UserService {
     return blockedUserId;
   }
 
-  public static async getAllUsers(args?: object) {
-    const users = await UserModel.find(args);
-    return users;
+  public static async getAllUsers(args?: object, limit?: number) {
+    const allUsers = await UserModel.find();
+    const users = await UserModel.find(args).limit(limit);
+    return {
+      users,
+      length: allUsers.length,
+    };
   }
 }
