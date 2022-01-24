@@ -20,10 +20,17 @@ class EditUserController {
                 const userData = yield editUser_service_1.EditUserService.editUser(userId, Object.assign({}, userInfo));
                 res.cookie("refreshToken", userData.refreshToken, {
                     maxAge: 2 * 24 * 60 * 60 * 1000,
+                    sameSite: "none",
                     httpOnly: true,
                 });
                 res.cookie("username", userData.user.username, {
                     maxAge: 2 * 24 * 60 * 60 * 1000,
+                    sameSite: "none",
+                    httpOnly: true,
+                });
+                res.cookie("role", userData.user.role, {
+                    maxAge: 2 * 24 * 60 * 60 * 1000,
+                    sameSite: "none",
                     httpOnly: true,
                 });
                 return res.json(userData);
