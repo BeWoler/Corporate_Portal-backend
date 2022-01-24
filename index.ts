@@ -6,6 +6,8 @@ import mongoose from "mongoose";
 import { router } from "./src/routes/routes";
 import { adminRouter } from "./src/Admin/AdminRoutes/routes";
 
+const PORT = process.env.PORT;
+
 const errorMiddleware = require("./src/middlewares/error-middleware");
 
 dotenv.config();
@@ -32,7 +34,7 @@ const server = require("http").Server(app);
 const connection = async () => {
   await mongoose.connect(process.env.DB_URL);
   console.log("Connected");
-  server.listen(process.env.PORT || 3010, () => {
+  server.listen(PORT || 3010, () => {
     console.log(`Server is running on ${process.env.PORT} port`);
   });
 };
