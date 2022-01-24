@@ -24,18 +24,21 @@ export class ChangePasswordController {
       res.cookie("refreshToken", userData.refreshToken, {
         maxAge: 2 * 24 * 60 * 60 * 1000,
         sameSite: "none",
+        secure: true,
         httpOnly: true,
       });
 
       res.cookie("username", userData.user.username, {
         maxAge: 2 * 24 * 60 * 60 * 1000,
         sameSite: "none",
+        secure: true,
         httpOnly: true,
       });
 
       res.cookie("role", userData.user.role, {
         maxAge: 2 * 24 * 60 * 60 * 1000,
         sameSite: "none",
+        secure: true,
         httpOnly: true,
       });
 
