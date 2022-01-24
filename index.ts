@@ -27,7 +27,7 @@ app.use("/admin", adminRouter);
 app.use("/files", express.static("./files"));
 app.use(errorMiddleware);
 
-const server = require("https").Server(app);
+const server = require("http").Server(app);
 
 const connection = async () => {
   await mongoose.connect(process.env.DB_URL);

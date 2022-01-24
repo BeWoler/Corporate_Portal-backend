@@ -31,9 +31,6 @@
   },
   "scripts": {
     "socket": "tsc && node dist/socket.js",
-    "postinstall": "tsc",
-    "watch-node": "nodemon dist/index.js",
-    "watch-ts": "tsc -w",
     "start": "tsc && node dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "seed": "tsc && node dist/src/seeds/seeds.js",
