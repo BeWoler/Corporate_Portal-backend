@@ -73,7 +73,7 @@ export class PostService {
     return posts;
   }
 
-  public static async getAllPosts() {
+  public static async getAllPosts(limit?: number) {
     const populateQuery = [
       {
         path: "user",
@@ -83,7 +83,11 @@ export class PostService {
         populate: { path: "user" },
       },
     ];
-    const posts = await PostModel.find().populate(populateQuery);
-    return posts;
+    const postsLength = await PostModel.find();
+    const posts = await PostModel.find().limit(limit).populate(populateQuery);
+    return {
+      posts: posts,
+      length: postsLength.length,
+    };
   }
 }

@@ -91,7 +91,8 @@ export class PostController {
     next: express.NextFunction
   ) {
     try {
-      const allPosts = await PostService.getAllPosts();
+      const limit = req.query.limit
+      const allPosts = await PostService.getAllPosts(+limit);
 
       return res.json(allPosts);
     } catch (e) {
