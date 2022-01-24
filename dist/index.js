@@ -56,7 +56,7 @@ const server = require("http").Server(app);
 const connection = () => __awaiter(void 0, void 0, void 0, function* () {
     yield mongoose_1.default.connect(process.env.DB_URL);
     console.log("Connected");
-    server.listen(process.env.PORT, () => {
+    server.listen(process.env.PORT || 3010, () => {
         console.log(`Server is running on ${process.env.PORT} port`);
     });
 });
