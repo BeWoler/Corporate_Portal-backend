@@ -1,7 +1,7 @@
 import * as dotenv from "dotenv";
 dotenv.config();
 
-const io = require("socket.io")(3020, {
+const io = require("socket.io")(process.env.SOCKET_PORT, {
   cors: {
     origin: process.env.CORS_ORIGIN,
     credentials: true,
