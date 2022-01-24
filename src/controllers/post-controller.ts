@@ -1,5 +1,8 @@
 import { PostService } from "../services/post-service";
 import * as express from "express";
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 const ObjectId = require("mongodb").ObjectId;
 
@@ -11,7 +14,7 @@ export class PostController {
   ) {
     try {
       const { userId, text, fileName } = req.body;
-      const filePath = `http://localhost:3010/${fileName}`;
+      const filePath = `${process.env.SERVER_URL}/${fileName}`;
       const postData = await PostService.create(userId, text, filePath);
 
       return res.json(postData);
@@ -91,7 +94,7 @@ export class PostController {
     next: express.NextFunction
   ) {
     try {
-      const limit = req.query.limit
+      const limit = req.query.limit;
       const allPosts = await PostService.getAllPosts(+limit);
 
       return res.json(allPosts);

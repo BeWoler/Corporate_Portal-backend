@@ -1,5 +1,8 @@
 import { AvatarService } from "../services/avatar-service";
 import * as express from "express";
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 export class AvatarController {
   public static async save(
@@ -12,7 +15,7 @@ export class AvatarController {
         const { username } = req.cookies;
         const imgPath = await AvatarService.save(
           username,
-          "http://localhost:3010/" + req.file.path
+          `${process.env.SERVER_URL}/${req.file.path}`
         );
         return res.json(imgPath);
       }
