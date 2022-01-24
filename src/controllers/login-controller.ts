@@ -13,18 +13,19 @@ export class LoginController {
 
       res.cookie("refreshToken", userData.refreshToken, {
         maxAge: 2 * 24 * 60 * 60 * 1000,
-        secure: true,
-        sameSite: true,
+        sameSite: "none",
         httpOnly: true,
       });
 
       res.cookie("username", userData.user.username, {
         maxAge: 2 * 24 * 60 * 60 * 1000,
+        sameSite: "none",
         httpOnly: true,
       });
 
       res.cookie("role", userData.user.role, {
         maxAge: 2 * 24 * 60 * 60 * 1000,
+        sameSite: "none",
         httpOnly: true,
       });
 
