@@ -20,8 +20,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv = __importStar(require("dotenv"));
+const index_1 = require("./index");
 dotenv.config();
-const io = require("socket.io")(process.env.SOCKET_PORT || 3020, {
+const io = require("socket.io")(index_1.server, {
     cors: {
         origin: process.env.CORS_ORIGIN,
         credentials: true,

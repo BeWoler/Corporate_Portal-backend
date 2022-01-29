@@ -31,6 +31,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.server = void 0;
 const dotenv = __importStar(require("dotenv"));
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
@@ -53,11 +54,11 @@ app.use("/api", routes_1.router);
 app.use("/admin", routes_2.adminRouter);
 app.use("/files", express_1.default.static("files"));
 app.use(errorMiddleware);
-const server = require("http").Server(app);
+exports.server = require("http").Server(app);
 const connection = () => __awaiter(void 0, void 0, void 0, function* () {
     yield mongoose_1.default.connect(process.env.DB_URL);
     console.log("Connected");
-    server.listen(PORT || 3010, () => {
+    exports.server.listen(PORT || 3010, () => {
         console.log(`Server is running on ${process.env.PORT} port`);
     });
 });
