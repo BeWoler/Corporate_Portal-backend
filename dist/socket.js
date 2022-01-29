@@ -29,7 +29,7 @@ const app = (0, express_1.default)();
 const http = require("http").createServer(app);
 const socketIO = require("socket.io")(http, {
     cors: {
-        origin: "*",
+        origin: "https://hardcore-sammet-c938c3.netlify.app",
         credentials: true,
     },
 });
