@@ -1,2 +1,2 @@
 web: node dist/index.js
-web: node dist/socket.js
+web2: node dist/socket.js
