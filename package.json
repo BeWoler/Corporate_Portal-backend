@@ -36,8 +36,7 @@
     "typescript": "^4.4.4"
   },
   "scripts": {
-    "socket": "tsc && node dist/socket.js",
-    "start": "tsc && node dist/index.js",
+    "start": "tsc && node dist/socket.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "seed": "tsc && node dist/src/seeds/seeds.js",
     "test:unit": "jest --config-jest.config.ts",
