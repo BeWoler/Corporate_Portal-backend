@@ -51,7 +51,7 @@ app.use((0, cors_1.default)({
 app.use((0, cookie_parser_1.default)());
 app.use("/api", routes_1.router);
 app.use("/admin", routes_2.adminRouter);
-app.use("/files", express_1.default.static("./files"));
+app.use("/files", express_1.default.static("files"));
 app.use(errorMiddleware);
 const server = require("http").Server(app);
 const connection = () => __awaiter(void 0, void 0, void 0, function* () {
