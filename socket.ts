@@ -7,11 +7,12 @@ const app = express();
 
 app.use(cors());
 
-const http = require("http").createServer(app);
-const socketIO = require("socket.io")(http, {
+const https = require("https").createServer(app);
+const socketIO = require("socket.io")(https, {
   cors: {
     origin: process.env.CORS_ORIGIN_SOCKET,
     credentials: true,
+    withCredentials: true,
   },
 });
 
@@ -30,7 +31,7 @@ const getUser = (userId: string) => {
   return users.find((user) => user.userId === userId);
 };
 
-http.listen(3020, () => {
+https.listen(3020, () => {
   console.log("Connected");
   socketIO.on("connection", (socket: any) => {
     console.log("socket connected", socket.id);

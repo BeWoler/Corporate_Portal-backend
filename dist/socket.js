@@ -28,11 +28,12 @@ const cors_1 = __importDefault(require("cors"));
 dotenv.config();
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
-const http = require("http").createServer(app);
-const socketIO = require("socket.io")(http, {
+const https = require("https").createServer(app);
+const socketIO = require("socket.io")(https, {
     cors: {
         origin: process.env.CORS_ORIGIN_SOCKET,
         credentials: true,
+        withCredentials: true,
     },
 });
 let users = [];
@@ -46,7 +47,7 @@ const removeUser = (socketId) => {
 const getUser = (userId) => {
     return users.find((user) => user.userId === userId);
 };
-http.listen(3020, () => {
+https.listen(3020, () => {
     console.log("Connected");
     socketIO.on("connection", (socket) => {
         console.log("socket connected", socket.id);
