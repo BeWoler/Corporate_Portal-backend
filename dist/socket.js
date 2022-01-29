@@ -27,7 +27,7 @@ const express_1 = __importDefault(require("express"));
 dotenv.config();
 const app = (0, express_1.default)();
 const http = require("http").createServer(app);
-const io = require("socket.io")(http, {
+const socketIO = require("socket.io")(http, {
     cors: {
         origin: "*",
     },
@@ -45,16 +45,16 @@ const getUser = (userId) => {
 };
 http.listen(3020, () => {
     console.log("Connected");
-    io.on("connection", (socket) => {
+    socketIO.on("connection", (socket) => {
         console.log("socket connected", socket.id);
         socket.on("addUser", (userId) => {
             addUser(userId, socket.id);
-            io.emit("getUsers", users);
+            socketIO.emit("getUsers", users);
         });
         socket.on("sendMessage", ({ sender, receiverId, text }) => {
             const user = getUser(receiverId);
             if (user) {
-                io.to(user.socketId).emit("getMessage", {
+                socketIO.to(user.socketId).emit("getMessage", {
                     sender,
                     receiverId,
                     text,
@@ -65,7 +65,7 @@ http.listen(3020, () => {
         socket.on("disconnect", () => {
             console.log(`a user ${socket.id} disconnected`);
             removeUser(socket.id);
-            io.emit("getUsers", users);
+            socketIO.emit("getUsers", users);
         });
     });
 });
