@@ -1,5 +1,8 @@
 import { AdminChangeUserAvatarService } from "../AdminServices/admin-changeUserAvatar-service";
 import * as express from "express";
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 export class AdminChangeUserAvatarController {
   public static async save(
@@ -11,7 +14,7 @@ export class AdminChangeUserAvatarController {
       const { userId, avatarUrl } = req.body;
       const imgPath = await AdminChangeUserAvatarService.save(
         userId,
-        "http://localhost:3010/" + avatarUrl
+        `${process.env.SERVER_URL}/${avatarUrl}`
       );
       return res.json(imgPath);
     } catch (e) {

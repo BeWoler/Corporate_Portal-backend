@@ -40,8 +40,14 @@ class ChangePasswordService {
             yield candidatePassword.update({ password: hashPassword });
             yield candidatePassword.save();
             const userDto = new user_dto_1.UserDto(candidateToChange);
-            const tokens = token_service_1.TokenService.generateTokens(Object.assign({}, userDto));
-            yield token_service_1.TokenService.saveToken(userDto.id, tokens.refreshToken);
+            const tokens = token_service_1.TokenService.generateTokens({
+                _id: candidateToChange._id,
+                email: candidateToChange.email,
+                username: candidateToChange.username,
+                firstName: candidateToChange.firstName,
+                lastName: candidateToChange.lastName,
+            });
+            yield token_service_1.TokenService.saveToken(candidateToChange._id, tokens.refreshToken);
             return Object.assign({ user: userDto }, tokens);
         });
     }

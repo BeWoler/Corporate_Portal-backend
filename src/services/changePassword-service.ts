@@ -41,8 +41,14 @@ export class ChangePasswordService {
 
     const userDto = new UserDto(candidateToChange);
 
-    const tokens = TokenService.generateTokens({ ...userDto });
-    await TokenService.saveToken(userDto.id, tokens.refreshToken);
+    const tokens = TokenService.generateTokens({
+      _id: candidateToChange._id,
+      email: candidateToChange.email,
+      username: candidateToChange.username,
+      firstName: candidateToChange.firstName,
+      lastName: candidateToChange.lastName,
+    });
+    await TokenService.saveToken(candidateToChange._id, tokens.refreshToken);
 
     return {
       user: userDto,

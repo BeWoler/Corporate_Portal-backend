@@ -46,8 +46,14 @@ class RegistrationService {
                 password: hashPassword,
             });
             const userDto = new user_dto_1.UserDto(user);
-            const tokens = token_service_1.TokenService.generateTokens(Object.assign({}, userDto));
-            yield token_service_1.TokenService.saveToken(userDto.id, tokens.refreshToken);
+            const tokens = token_service_1.TokenService.generateTokens({
+                _id: user._id,
+                email: user.email,
+                username: user.username,
+                firstName: user.firstName,
+                lastName: user.lastName,
+            });
+            yield token_service_1.TokenService.saveToken(user._id, tokens.refreshToken);
             return Object.assign({ user: userDto, userPassword }, tokens);
         });
     }

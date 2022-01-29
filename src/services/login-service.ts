@@ -23,8 +23,14 @@ export class LoginService {
 
     const userDto = new UserDto(user);
 
-    const tokens = TokenService.generateTokens({ ...userDto });
-    await TokenService.saveToken(userDto.id, tokens.refreshToken);
+    const tokens = TokenService.generateTokens({
+      _id: user._id,
+      email: user.email,
+      username: user.username,
+      firstName: user.firstName,
+      lastName: user.lastName,
+    });
+    await TokenService.saveToken(user._id, tokens.refreshToken);
 
     return {
       user: user,
@@ -41,11 +47,17 @@ export class LoginService {
     if (!userData || !tokenFromDb) {
       throw ApiError.UnauthorizedError();
     }
-    const user = await UserModel.findById(userData.id).populate("friends");
+    const user = await UserModel.findById(userData._id).populate("friends");
     const userDto = new UserDto(user);
 
-    const tokens = TokenService.generateTokens({ ...userDto });
-    await TokenService.saveToken(userDto.id, tokens.refreshToken);
+    const tokens = TokenService.generateTokens({
+      _id: user._id,
+      email: user.email,
+      username: user.username,
+      firstName: user.firstName,
+      lastName: user.lastName,
+    });
+    await TokenService.saveToken(user._id, tokens.refreshToken);
 
     return {
       user: userDto,

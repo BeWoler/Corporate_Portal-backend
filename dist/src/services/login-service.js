@@ -36,8 +36,14 @@ class LoginService {
                 ]);
             }
             const userDto = new user_dto_1.UserDto(user);
-            const tokens = token_service_1.TokenService.generateTokens(Object.assign({}, userDto));
-            yield token_service_1.TokenService.saveToken(userDto.id, tokens.refreshToken);
+            const tokens = token_service_1.TokenService.generateTokens({
+                _id: user._id,
+                email: user.email,
+                username: user.username,
+                firstName: user.firstName,
+                lastName: user.lastName,
+            });
+            yield token_service_1.TokenService.saveToken(user._id, tokens.refreshToken);
             return Object.assign({ user: user, userPassword }, tokens);
         });
     }
@@ -51,10 +57,16 @@ class LoginService {
             if (!userData || !tokenFromDb) {
                 throw api_error_1.ApiError.UnauthorizedError();
             }
-            const user = yield user_model_1.UserModel.findById(userData.id).populate("friends");
+            const user = yield user_model_1.UserModel.findById(userData._id).populate("friends");
             const userDto = new user_dto_1.UserDto(user);
-            const tokens = token_service_1.TokenService.generateTokens(Object.assign({}, userDto));
-            yield token_service_1.TokenService.saveToken(userDto.id, tokens.refreshToken);
+            const tokens = token_service_1.TokenService.generateTokens({
+                _id: user._id,
+                email: user.email,
+                username: user.username,
+                firstName: user.firstName,
+                lastName: user.lastName,
+            });
+            yield token_service_1.TokenService.saveToken(user._id, tokens.refreshToken);
             return Object.assign({ user: userDto }, tokens);
         });
     }

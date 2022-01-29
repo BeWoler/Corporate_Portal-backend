@@ -1,4 +1,4 @@
-import { Mongoose, ObjectId, Schema } from "mongoose";
+import { ObjectId } from "mongoose";
 
 export class UserDto {
   email: string;

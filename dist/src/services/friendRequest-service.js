@@ -34,7 +34,9 @@ class FriendRequestService {
         return __awaiter(this, void 0, void 0, function* () {
             const receiver = yield user_model_1.UserModel.findOneAndUpdate({ _id: receiverId }, { $addToSet: { friends: senderId } });
             const sender = yield user_model_1.UserModel.findOneAndUpdate({ _id: senderId }, { $addToSet: { friends: receiverId } });
-            const request = yield friends_requests_model_1.FriendRequestModel.findOneAndDelete({ requestId });
+            const request = yield friends_requests_model_1.FriendRequestModel.findOneAndDelete({
+                _id: requestId,
+            });
             const receiverDto = new user_dto_1.UserDto(receiver);
             const senderDto = new user_dto_1.UserDto(sender);
             return { receiver: receiverDto, sender: senderDto, request };

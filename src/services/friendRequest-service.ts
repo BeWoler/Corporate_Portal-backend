@@ -35,7 +35,9 @@ export class FriendRequestService {
       { _id: senderId },
       { $addToSet: { friends: receiverId } }
     );
-    const request = await FriendRequestModel.findOneAndDelete({ requestId });
+    const request = await FriendRequestModel.findOneAndDelete({
+      _id: requestId,
+    });
 
     const receiverDto = new UserDto(receiver);
     const senderDto = new UserDto(sender);
