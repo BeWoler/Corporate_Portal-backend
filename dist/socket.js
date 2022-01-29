@@ -26,7 +26,7 @@ const dotenv = __importStar(require("dotenv"));
 const express_1 = __importDefault(require("express"));
 dotenv.config();
 const app = (0, express_1.default)();
-const http = require("http").createServer(app);
+const http = require("http").Server(app);
 const io = require("socket.io")(http || 3020, {
     cors: {
         origin: process.env.CORS_ORIGIN,
