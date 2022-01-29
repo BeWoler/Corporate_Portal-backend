@@ -18,22 +18,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv = __importStar(require("dotenv"));
-const express_1 = __importDefault(require("express"));
-const cors_1 = __importDefault(require("cors"));
 dotenv.config();
-const app = (0, express_1.default)();
-app.use((0, cors_1.default)());
-const https = require("https").createServer(app);
-const socketIO = require("socket.io")(https, {
+const io = require("socket.io")(process.env.SOCKET_PORT || 3020, {
     cors: {
-        origin: process.env.CORS_ORIGIN_SOCKET,
-        credentials: true,
+        origin: process.env.CORS_ORIGIN,
         withCredentials: true,
+        credentials: true,
+        methods: ["GET", "POST"],
     },
 });
 let users = [];
@@ -47,30 +40,27 @@ const removeUser = (socketId) => {
 const getUser = (userId) => {
     return users.find((user) => user.userId === userId);
 };
-https.listen(3020, () => {
-    console.log("Connected");
-    socketIO.on("connection", (socket) => {
-        console.log("socket connected", socket.id);
-        socket.on("addUser", (userId) => {
-            addUser(userId, socket.id);
-            socketIO.emit("getUsers", users);
-        });
-        socket.on("sendMessage", ({ sender, receiverId, text }) => {
-            const user = getUser(receiverId);
-            if (user) {
-                socketIO.to(user.socketId).emit("getMessage", {
-                    sender,
-                    receiverId,
-                    text,
-                });
-            }
-            return;
-        });
-        socket.on("disconnect", () => {
-            console.log(`a user ${socket.id} disconnected`);
-            removeUser(socket.id);
-            socketIO.emit("getUsers", users);
-        });
+io.on("connection", (socket) => {
+    console.log("socket connected", socket.id);
+    socket.on("addUser", (userId) => {
+        addUser(userId, socket.id);
+        io.emit("getUsers", users);
+    });
+    socket.on("sendMessage", ({ sender, receiverId, text }) => {
+        const user = getUser(receiverId);
+        if (user) {
+            io.to(user.socketId).emit("getMessage", {
+                sender,
+                receiverId,
+                text,
+            });
+        }
+        return;
+    });
+    socket.on("disconnect", () => {
+        console.log(`a user ${socket.id} disconnected`);
+        removeUser(socket.id);
+        io.emit("getUsers", users);
     });
 });
 //# sourceMappingURL=socket.js.map
