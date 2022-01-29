@@ -18,22 +18,16 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv = __importStar(require("dotenv"));
-const express_1 = __importDefault(require("express"));
-const cors_1 = __importDefault(require("cors"));
 dotenv.config();
-const app = (0, express_1.default)();
-app.use((0, cors_1.default)({
-    origin: process.env.CORS_ORIGIN_SOCKET,
-    credentials: true,
-    methods: ["GET", "POST"],
-}));
-const server = require("http").createServer(app);
-const io = require("socket.io")(server.listen(process.env.SOCKET_PORT || 3020));
+const io = require("socket.io")(process.env.SOCKET_PORT || 3020, {
+    cors: {
+        origin: process.env.CORS_ORIGIN_SOCKET,
+        credentials: true,
+        methods: ["GET", "POST"],
+    },
+});
 let users = [];
 const addUser = (userId, socketId) => {
     !users.some((user) => user.userId === userId) &&
