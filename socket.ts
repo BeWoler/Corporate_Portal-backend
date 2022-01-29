@@ -1,12 +1,16 @@
 import * as dotenv from "dotenv";
 import express from "express";
+import cors from "cors";
 dotenv.config();
 
 const app = express();
+
+app.use(cors());
+
 const http = require("http").createServer(app);
 const socketIO = require("socket.io")(http, {
   cors: {
-    origin: "https://hardcore-sammet-c938c3.netlify.app",
+    origin: process.env.CORS_ORIGIN_SOCKET,
     credentials: true,
   },
 });
