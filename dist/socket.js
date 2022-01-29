@@ -30,6 +30,7 @@ const http = require("http").createServer(app);
 const socketIO = require("socket.io")(http, {
     cors: {
         origin: "*",
+        credentials: true,
     },
 });
 let users = [];
