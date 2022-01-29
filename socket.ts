@@ -1,7 +1,11 @@
 import * as dotenv from "dotenv";
+import express from "express";
 dotenv.config();
 
-const io = require("socket.io")(process.env.SOCKET_PORT || 3020, {
+const app = express();
+const http = require("http").createServer(app);
+
+const io = require("socket.io")(http, {
   cors: {
     origin: "*",
   },
@@ -22,28 +26,31 @@ const getUser = (userId: string) => {
   return users.find((user) => user.userId === userId);
 };
 
-io.on("connection", (socket: any) => {
-  console.log("socket connected", socket.id);
-  socket.on("addUser", (userId: string) => {
-    addUser(userId, socket.id);
-    io.emit("getUsers", users);
-  });
+http.listen(3020, () => {
+  console.log("Connected");
+  io.on("connection", (socket: any) => {
+    console.log("socket connected", socket.id);
+    socket.on("addUser", (userId: string) => {
+      addUser(userId, socket.id);
+      io.emit("getUsers", users);
+    });
 
-  socket.on("sendMessage", ({ sender, receiverId, text }) => {
-    const user = getUser(receiverId);
-    if (user) {
-      io.to(user.socketId).emit("getMessage", {
-        sender,
-        receiverId,
-        text,
-      });
-    }
-    return;
-  });
+    socket.on("sendMessage", ({ sender, receiverId, text }) => {
+      const user = getUser(receiverId);
+      if (user) {
+        io.to(user.socketId).emit("getMessage", {
+          sender,
+          receiverId,
+          text,
+        });
+      }
+      return;
+    });
 
-  socket.on("disconnect", () => {
-    console.log(`a user ${socket.id} disconnected`);
-    removeUser(socket.id);
-    io.emit("getUsers", users);
+    socket.on("disconnect", () => {
+      console.log(`a user ${socket.id} disconnected`);
+      removeUser(socket.id);
+      io.emit("getUsers", users);
+    });
   });
 });

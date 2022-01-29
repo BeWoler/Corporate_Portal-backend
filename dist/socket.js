@@ -18,10 +18,16 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv = __importStar(require("dotenv"));
+const express_1 = __importDefault(require("express"));
 dotenv.config();
-const io = require("socket.io")(process.env.SOCKET_PORT || 3020, {
+const app = (0, express_1.default)();
+const http = require("http").createServer(app);
+const io = require("socket.io")(http, {
     cors: {
         origin: "*",
     },
@@ -37,27 +43,30 @@ const removeUser = (socketId) => {
 const getUser = (userId) => {
     return users.find((user) => user.userId === userId);
 };
-io.on("connection", (socket) => {
-    console.log("socket connected", socket.id);
-    socket.on("addUser", (userId) => {
-        addUser(userId, socket.id);
-        io.emit("getUsers", users);
-    });
-    socket.on("sendMessage", ({ sender, receiverId, text }) => {
-        const user = getUser(receiverId);
-        if (user) {
-            io.to(user.socketId).emit("getMessage", {
-                sender,
-                receiverId,
-                text,
-            });
-        }
-        return;
-    });
-    socket.on("disconnect", () => {
-        console.log(`a user ${socket.id} disconnected`);
-        removeUser(socket.id);
-        io.emit("getUsers", users);
+http.listen(3020, () => {
+    console.log("Connected");
+    io.on("connection", (socket) => {
+        console.log("socket connected", socket.id);
+        socket.on("addUser", (userId) => {
+            addUser(userId, socket.id);
+            io.emit("getUsers", users);
+        });
+        socket.on("sendMessage", ({ sender, receiverId, text }) => {
+            const user = getUser(receiverId);
+            if (user) {
+                io.to(user.socketId).emit("getMessage", {
+                    sender,
+                    receiverId,
+                    text,
+                });
+            }
+            return;
+        });
+        socket.on("disconnect", () => {
+            console.log(`a user ${socket.id} disconnected`);
+            removeUser(socket.id);
+            io.emit("getUsers", users);
+        });
     });
 });
 //# sourceMappingURL=socket.js.map
