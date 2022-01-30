@@ -26,7 +26,7 @@ app.use(
 app.use(cookieParser());
 app.use("/api", router);
 app.use("/admin", adminRouter);
-app.use("/files", express.static("public"));
+app.use("/files", express.static("files"));
 app.use(errorMiddleware);
 
 export const server = require("http").Server(app);
