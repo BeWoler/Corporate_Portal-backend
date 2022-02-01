@@ -31,38 +31,26 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const login_service_1 = require("../../src/services/login-service");
+const friendRequest_service_1 = require("../../src/services/friendRequest-service");
 const dotenv = __importStar(require("dotenv"));
 const mongoose_1 = __importDefault(require("mongoose"));
+const ObjectId = require("mongodb").ObjectId;
 dotenv.config();
+const userId = new ObjectId("61e15956b449213699a20d3a");
+const secondUserId = new ObjectId("61e15956b449213699a20d4a");
 beforeAll((done) => {
     mongoose_1.default.connect(process.env.DB_URL);
     done();
 });
-describe("LoginService", () => {
-    it("Login withn wrong username", () => __awaiter(void 0, void 0, void 0, function* () {
-        yield login_service_1.LoginService.login("fsdsdfsdfsd", "1234").catch((err) => {
-            expect(err.status).toBe(400);
-            expect(err.message).toBe("User does not exist");
-        });
-    }));
-    it("Login withn wrong password", () => __awaiter(void 0, void 0, void 0, function* () {
-        yield login_service_1.LoginService.login("testmodel", "gfgdfgdfgdf").catch((err) => {
-            expect(err.status).toBe(400);
-            expect(err.message).toBe("Incorrect password");
-        });
-    }));
-    it("Login withn the right data", () => __awaiter(void 0, void 0, void 0, function* () {
-        const res = yield login_service_1.LoginService.login("testmodel", "1234");
-        expect(res.user);
-        expect(res.accessToken);
-        expect(res.refreshToken);
-        expect(res.userPassword);
-        expect(res.user.username).toBe("testmodel");
+describe("Friend requests service test", () => {
+    it("Create request", () => __awaiter(void 0, void 0, void 0, function* () {
+        const request = yield friendRequest_service_1.FriendRequestService.request(userId, secondUserId);
+        expect(request.receiver).toBe(userId);
+        expect(request.sender).toBe(secondUserId);
     }));
 });
 afterAll((done) => {
     mongoose_1.default.connection.close();
     done();
 });
-//# sourceMappingURL=login-service.test.js.map
+//# sourceMappingURL=friendRequest-service.test.js.map

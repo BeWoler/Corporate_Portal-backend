@@ -31,38 +31,28 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const login_service_1 = require("../../src/services/login-service");
-const dotenv = __importStar(require("dotenv"));
+const delete_service_1 = require("../../src/services/delete-service");
 const mongoose_1 = __importDefault(require("mongoose"));
+const dotenv = __importStar(require("dotenv"));
 dotenv.config();
+const ObjectId = require("mongodb").ObjectId;
+const userId = new ObjectId("61e15956b449213699a20d3a");
 beforeAll((done) => {
     mongoose_1.default.connect(process.env.DB_URL);
     done();
 });
-describe("LoginService", () => {
-    it("Login withn wrong username", () => __awaiter(void 0, void 0, void 0, function* () {
-        yield login_service_1.LoginService.login("fsdsdfsdfsd", "1234").catch((err) => {
-            expect(err.status).toBe(400);
-            expect(err.message).toBe("User does not exist");
-        });
+describe("Delete service test", () => {
+    it("Delete user", () => __awaiter(void 0, void 0, void 0, function* () {
+        const user = yield delete_service_1.DeleteService.delete("134134", userId);
+        expect(user.user).toEqual({ deletedCount: 1 });
     }));
-    it("Login withn wrong password", () => __awaiter(void 0, void 0, void 0, function* () {
-        yield login_service_1.LoginService.login("testmodel", "gfgdfgdfgdf").catch((err) => {
-            expect(err.status).toBe(400);
-            expect(err.message).toBe("Incorrect password");
-        });
-    }));
-    it("Login withn the right data", () => __awaiter(void 0, void 0, void 0, function* () {
-        const res = yield login_service_1.LoginService.login("testmodel", "1234");
-        expect(res.user);
-        expect(res.accessToken);
-        expect(res.refreshToken);
-        expect(res.userPassword);
-        expect(res.user.username).toBe("testmodel");
+    it("Delete unexisting user", () => __awaiter(void 0, void 0, void 0, function* () {
+        const user = yield delete_service_1.DeleteService.delete("123124", new ObjectId("61e15000b449213699a20d3a"));
+        expect(user.user).toEqual({ deletedCount: 0 });
     }));
 });
 afterAll((done) => {
     mongoose_1.default.connection.close();
     done();
 });
-//# sourceMappingURL=login-service.test.js.map
+//# sourceMappingURL=delete-service.test.js.map

@@ -18,20 +18,20 @@ describe("LoginService", () => {
   });
 
   it("Login withn wrong password", async () => {
-    await LoginService.login("test", "gfgdfgdfgdf").catch((err) => {
+    await LoginService.login("testmodel", "gfgdfgdfgdf").catch((err) => {
       expect(err.status).toBe(400);
       expect(err.message).toBe("Incorrect password");
     });
   });
 
   it("Login withn the right data", async () => {
-    const res = await LoginService.login("test", "1234");
+    const res = await LoginService.login("testmodel", "1234");
 
     expect(res.user);
     expect(res.accessToken);
     expect(res.refreshToken);
     expect(res.userPassword);
-    expect(res.user.username).toBe("test");
+    expect(res.user.username).toBe("testmodel");
   });
 });
 
