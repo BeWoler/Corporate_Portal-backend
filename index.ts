@@ -26,10 +26,10 @@ app.use(
 app.use(cookieParser());
 app.use("/api", router);
 app.use("/admin", adminRouter);
-app.use("/files", express.static("./files"));
+app.use("/files", express.static("files"));
 app.use(errorMiddleware);
 
-const server = require("http").Server(app);
+export const server = require("http").Server(app);
 
 const connection = async () => {
   await mongoose.connect(process.env.DB_URL);
